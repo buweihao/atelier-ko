@@ -4,8 +4,7 @@
 
 ![Astro 6](https://img.shields.io/badge/Astro-6.4.8-ff5d01?style=for-the-badge&logo=astro&logoColor=white)
 ![Tailwind CSS 4](https://img.shields.io/badge/Tailwind_CSS-4.1-38bdf8?style=for-the-badge&logo=tailwindcss&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-ESM-f7df1e?style=for-the-badge&logo=javascript&logoColor=111)
-![Static Theme](https://img.shields.io/badge/Output-static-27272a?style=for-the-badge)
+![MIT License](https://img.shields.io/badge/License-MIT-27272a?style=for-the-badge)
 
 Preview: [https://atelier-ko-topaz.vercel.app/](https://atelier-ko-topaz.vercel.app/)
 
