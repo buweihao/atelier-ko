@@ -1,5 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Atelier Kō">
-  <rect width="64" height="64" rx="14" fill="#f8f7f4"/>
-  <path d="M15 46 29 14h2.8l14.4 32h-5.1l-4-9.1H23.5L19.7 46H15Zm10.1-13h10.4l-5.3-12.4L25.1 33Z" fill="#27272a"/>
-  <path d="M42.4 18h4.1v12.7L56.8 18h5L51.2 31.1 62.5 46h-5.2L46.5 31.8V46h-4.1V18Z" fill="#5a2d10"/>
+  <rect width="64" height="64" rx="16" fill="#f8f7f4"/>
+  <rect x="5.5" y="5.5" width="53" height="53" rx="12.5" fill="none" stroke="#27272a" stroke-opacity=".14"/>
+  <path d="M17.5 47 30.3 16.5h3.5L46.5 47h-5.1l-3.1-7.7H25.5L22.5 47h-5Zm9.6-11.7h9.6L32 23.2l-4.9 12.1Z" fill="#27272a"/>
+  <path d="M28.4 43.6h7.2" stroke="#5a2d10" stroke-width="2.4" stroke-linecap="round"/>
 </svg>
