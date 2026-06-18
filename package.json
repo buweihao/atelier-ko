@@ -2,6 +2,7 @@
   "name": "atelier-ko-astro-theme",
   "version": "1.0.0",
   "private": true,
+  "homepage": "https://atelier-ko-topaz.vercel.app/",
   "type": "module",
   "scripts": {
     "dev": "astro dev",

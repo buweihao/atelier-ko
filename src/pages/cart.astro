@@ -11,7 +11,7 @@ const cartProducts = products.map(productForJson);
   description="Review the pieces you've selected from the Atelier Kō catalogue."
   noindex={true}
 >
-  <main class="mx-auto max-w-screen-xl px-6 py-12">
+  <main id="main-content" class="mx-auto max-w-screen-xl px-6 py-12">
     <header class="mb-12 flex items-end justify-between border-b border-line pb-8">
       <div class="space-y-3">
         <p class="text-xs uppercase tracking-[0.25em] text-faded">Your archive</p>
@@ -173,7 +173,7 @@ const cartProducts = products.map(productForJson);
                     type="button"
                     class="grid size-8 place-items-center text-sm transition-colors hover:bg-paper"
                     data-cart-action="decrease"
-                    aria-label="Decrease quantity"
+                    aria-label={`Decrease ${product.name} quantity`}
                   >
                     −
                   </button>
@@ -182,7 +182,7 @@ const cartProducts = products.map(productForJson);
                     type="button"
                     class="grid size-8 place-items-center text-sm transition-colors hover:bg-paper"
                     data-cart-action="increase"
-                    aria-label="Increase quantity"
+                    aria-label={`Increase ${product.name} quantity`}
                   >
                     +
                   </button>
@@ -191,6 +191,7 @@ const cartProducts = products.map(productForJson);
                   type="button"
                   class="text-[11px] uppercase tracking-widest text-faded underline underline-offset-4 hover:text-ink"
                   data-cart-action="remove"
+                  aria-label={`Remove ${product.name} from cart`}
                 >
                   Remove
                 </button>

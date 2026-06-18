@@ -20,6 +20,7 @@ const productUrl = new URL(`/products/${product.slug}`, Astro.site ?? Astro.url.
   description={product.description.slice(0, 155)}
   image={product.images[0]}
 >
+  <main id="main-content">
   <div class="mx-auto max-w-screen-xl px-6 pt-8">
     <nav class="flex gap-2 text-xs uppercase tracking-widest text-faded" aria-label="Breadcrumb">
       <a href="/catalog" class="hover:text-ink">Catalogue</a>
@@ -28,7 +29,7 @@ const productUrl = new URL(`/products/${product.slug}`, Astro.site ?? Astro.url.
     </nav>
   </div>
 
-  <main class="mx-auto max-w-screen-xl px-6 py-12">
+  <div class="mx-auto max-w-screen-xl px-6 py-12">
     <section class="grid grid-cols-1 items-start gap-16 lg:grid-cols-12">
       <div class="space-y-6 lg:col-span-7" data-product-gallery>
         <div class="relative aspect-[4/5] overflow-hidden rounded-[min(1vw,12px)] bg-paper">
@@ -122,7 +123,7 @@ const productUrl = new URL(`/products/${product.slug}`, Astro.site ?? Astro.url.
         {related.map((item) => <ProductCard product={item} />)}
       </div>
     </section>
-  </main>
+  </div>
 
   <script is:inline type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
@@ -179,4 +180,5 @@ const productUrl = new URL(`/products/${product.slug}`, Astro.site ?? Astro.url.
       });
     }
   </script>
+  </main>
 </BaseLayout>

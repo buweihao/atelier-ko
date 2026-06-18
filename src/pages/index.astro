@@ -18,6 +18,8 @@ if (!solo) {
   description="A small catalogue of seating, tables and storage. Solid oak, ash and walnut, hand-built to order in Småland, Sweden."
   image={heroImg}
 >
+  <main id="main-content">
+  <h1 class="sr-only">Atelier Kō — hand-carved furniture from the northern woods</h1>
   <section class="relative overflow-hidden bg-base">
     <div class="md:hidden">
       <div class="aspect-[4/3] w-full">
@@ -37,11 +39,11 @@ if (!solo) {
           <span class="inline-block h-px w-8 bg-ink/40"></span>
           Småland, Sweden · Est. 2018
         </p>
-        <h1 class="text-balance font-serif text-4xl leading-[0.95]">
+        <p class="text-balance font-serif text-4xl leading-[0.95]">
           Hand-carved pieces
           <br />
           <span class="italic text-accent">from the northern woods.</span>
-        </h1>
+        </p>
         <p class="max-w-[48ch] text-pretty leading-relaxed text-faded">
           A small, slow catalogue of seating, tables and storage — solid oak, ash and walnut, shaped by hand
           and built to outlast the room they were made for.
@@ -90,11 +92,11 @@ if (!solo) {
             <span class="inline-block h-px w-8 bg-ink/40"></span>
             Småland, Sweden · Est. 2018
           </p>
-          <h1 class="text-balance font-serif text-5xl leading-[0.95] lg:text-6xl">
+          <p class="text-balance font-serif text-5xl leading-[0.95] lg:text-6xl">
             Hand-carved pieces
             <br />
             <span class="italic text-accent">from the northern woods.</span>
-          </h1>
+          </p>
           <p class="max-w-[48ch] text-pretty leading-relaxed text-faded md:text-lg">
             A small, slow catalogue of seating, tables and storage — solid oak, ash and walnut, shaped by hand
             and built to outlast the room they were made for.
@@ -273,7 +275,7 @@ if (!solo) {
           >
             Notify me
           </button>
-          <p class="hidden pt-2 text-center text-sm text-accent" data-newsletter-success>
+          <p class="hidden pt-2 text-center text-sm text-accent" data-newsletter-success aria-live="polite">
             You're on the list. We'll be in touch.
           </p>
         </form>
@@ -285,7 +287,7 @@ if (!solo) {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Atelier Kō",
-    url: Astro.site?.href ?? "https://atelier-ko.example",
+    url: Astro.site?.href ?? "https://atelier-ko-topaz.vercel.app/",
     slogan: "Furniture, made by hand",
     address: {
       "@type": "PostalAddress",
@@ -313,4 +315,5 @@ if (!solo) {
       });
     }
   </script>
+  </main>
 </BaseLayout>

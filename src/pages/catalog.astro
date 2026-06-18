@@ -8,6 +8,7 @@ import { allCategories, allMaterials, products } from "@/data/products.js";
   title="The Catalogue — Atelier Kō"
   description="Browse every piece in the Atelier Kō catalogue. Filter by category and material — solid oak, ash, walnut. Hand-built to order."
 >
+  <main id="main-content">
   <section class="mx-auto max-w-screen-xl px-6 pb-12 pt-20 md:pb-16 md:pt-28">
     <p class="mb-6 flex items-center gap-3 text-[11px] uppercase tracking-[0.3em] text-faded">
       <span class="inline-block h-px w-8 bg-ink/40"></span>
@@ -21,7 +22,7 @@ import { allCategories, allMaterials, products } from "@/data/products.js";
     </p>
   </section>
 
-  <main class="mx-auto max-w-screen-xl px-6 pb-32">
+  <div class="mx-auto max-w-screen-xl px-6 pb-32">
     <section class="border-t border-line pb-12 pt-8" aria-label="Catalogue filters">
       <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div class="space-y-4">
@@ -29,12 +30,12 @@ import { allCategories, allMaterials, products } from "@/data/products.js";
             <span data-catalog-count>{products.length}</span> <span data-catalog-count-label>pieces</span>
           </h2>
           <div class="flex flex-wrap items-center gap-2" data-filter-group="category">
-            <button class="catalog-chip is-active" type="button" data-filter-value="all">All Pieces</button>
-            {allCategories.map((category) => <button class="catalog-chip" type="button" data-filter-value={category}>{category}</button>)}
+            <button class="catalog-chip is-active" type="button" data-filter-value="all" aria-pressed="true">All Pieces</button>
+            {allCategories.map((category) => <button class="catalog-chip" type="button" data-filter-value={category} aria-pressed="false">{category}</button>)}
           </div>
           <div class="flex flex-wrap items-center gap-2" data-filter-group="material">
-            <button class="catalog-chip is-active" type="button" data-filter-value="all">All Materials</button>
-            {allMaterials.map((material) => <button class="catalog-chip" type="button" data-filter-value={material}>{material}</button>)}
+            <button class="catalog-chip is-active" type="button" data-filter-value="all" aria-pressed="true">All Materials</button>
+            {allMaterials.map((material) => <button class="catalog-chip" type="button" data-filter-value={material} aria-pressed="false">{material}</button>)}
           </div>
         </div>
         <label class="flex items-center gap-3 text-xs uppercase tracking-widest text-faded">
@@ -66,7 +67,7 @@ import { allCategories, allMaterials, products } from "@/data/products.js";
         ))
       }
     </div>
-  </main>
+  </div>
 
   <style>
     .catalog-chip {
@@ -135,12 +136,17 @@ import { allCategories, allMaterials, products } from "@/data/products.js";
         if (!button) return;
         const key = group.dataset.filterGroup;
         filters[key] = button.dataset.filterValue;
-        group.querySelectorAll("button").forEach((chip) => chip.classList.remove("is-active"));
+        group.querySelectorAll("button").forEach((chip) => {
+          chip.classList.remove("is-active");
+          chip.setAttribute("aria-pressed", "false");
+        });
         button.classList.add("is-active");
+        button.setAttribute("aria-pressed", "true");
         applyFilters();
       });
     });
 
     sort.addEventListener("change", applyFilters);
   </script>
+  </main>
 </BaseLayout>

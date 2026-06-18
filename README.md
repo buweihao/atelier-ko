@@ -1,13 +1,13 @@
 # Atelier Kō - Astro Furniture Theme
 
-[![Atelier Kō theme preview](preview.webp)](http://127.0.0.1:4321/)
+[![Atelier Kō theme preview](preview.webp)](https://atelier-ko-topaz.vercel.app/)
 
 ![Astro 6](https://img.shields.io/badge/Astro-6.4.8-ff5d01?style=for-the-badge&logo=astro&logoColor=white)
 ![Tailwind CSS 4](https://img.shields.io/badge/Tailwind_CSS-4.1-38bdf8?style=for-the-badge&logo=tailwindcss&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-ESM-f7df1e?style=for-the-badge&logo=javascript&logoColor=111)
 ![Static Theme](https://img.shields.io/badge/Output-static-27272a?style=for-the-badge)
 
-Preview: [http://127.0.0.1:4321/](http://127.0.0.1:4321/)
+Preview: [https://atelier-ko-topaz.vercel.app/](https://atelier-ko-topaz.vercel.app/)
 
 Atelier Kō is a quiet, editorial Astro theme for a small furniture atelier or craft-led product catalogue. It is built as mostly static HTML, with small vanilla JavaScript enhancements for the catalogue filters, product gallery, newsletter preview, and local cart.
 
@@ -59,7 +59,7 @@ Update the production URL before publishing:
 SITE=https://your-domain.com npm run build
 ```
 
-The configured `site` value is used for canonical URLs, sitemap generation, and `robots.txt`.
+The configured `site` value is used for canonical URLs, sitemap generation, and `robots.txt`. The default preview site is `https://atelier-ko-topaz.vercel.app/`.
 
 Main content files:
 
