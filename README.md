@@ -1,4 +1,4 @@
-# Atelier Kō - Astro Furniture Theme
+# Atelier Kō - Minimalist Furniture Store Theme
 
 [![Atelier Kō theme preview](preview.webp)](https://atelier-ko-topaz.vercel.app/)
 
