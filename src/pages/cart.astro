@@ -123,7 +123,7 @@ const cartProducts = products.map(productForJson);
                   inputmode="numeric"
                   autocomplete="cc-csc"
                   placeholder="123"
-                  maxlength="4"
+                  maxlength="3"
                   data-card-cvc
                   class="mt-1 w-full border-b border-line bg-transparent py-2 text-sm transition-colors focus:border-ink focus:outline-none"
                 />
@@ -337,7 +337,7 @@ const cartProducts = products.map(productForJson);
     });
 
     cardCvc.addEventListener("input", () => {
-      cardCvc.value = digitsOnly(cardCvc.value, 4);
+      cardCvc.value = digitsOnly(cardCvc.value, 3);
     });
 
     document.addEventListener("atelier-cart-change", render);
