@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import { formatPrice, getProduct } from "@/data/products.js";
+import { formatPrice, getProducts } from "@/data/products.js";
 
 const { currentPath = "/" } = Astro.props;
 
@@ -16,11 +16,15 @@ const navItems = [
   { href: "/contact", label: "联系" },
 ];
 
-const featuredProduct = await getProduct("hydration-serum");
+const products = await getProducts();
+const featuredProduct = products.find((product) => product.slug === "hydration-serum") ?? products[0];
 
 if (!featuredProduct) {
-  throw new Error("Missing required mobile menu product: hydration-serum");
+  throw new Error("Missing products for mobile menu");
 }
+
+const featuredImage = featuredProduct.images[0];
+const featuredAlt = `${featuredProduct.name} - ${featuredProduct.shortDescription}`;
 ---
 
 <nav class="sticky top-0 z-50 border-b border-line bg-base/80 backdrop-blur-md" aria-label="Main navigation">
@@ -156,15 +160,28 @@ if (!featuredProduct) {
           data-mobile-menu-link
         >
           <div class="aspect-[16/10] max-h-[32dvh] overflow-hidden rounded-md bg-paper">
-            <Image
-              src={featuredProduct.images[0]}
-              alt={`${featuredProduct.name} - ${featuredProduct.shortDescription}`}
-              width={900}
-              height={560}
-              format="webp"
-              loading="lazy"
-              class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-            />
+            {
+              typeof featuredImage === "string" ? (
+                <img
+                  src={featuredImage}
+                  alt={featuredAlt}
+                  width="900"
+                  height="560"
+                  loading="lazy"
+                  class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                />
+              ) : (
+                <Image
+                  src={featuredImage}
+                  alt={featuredAlt}
+                  width={900}
+                  height={560}
+                  format="webp"
+                  loading="lazy"
+                  class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                />
+              )
+            }
           </div>
           <div class="mt-3 flex items-end justify-between gap-4">
             <div class="min-w-0 space-y-1.5">

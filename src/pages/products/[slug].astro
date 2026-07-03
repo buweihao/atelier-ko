@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import ProductCard from "@/components/ProductCard.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { formatPrice, getProducts, getRelated } from "@/data/products.js";
+import type { ProductImage } from "@/data/products.js";
 
 export async function getStaticPaths() {
   const products = await getProducts();
@@ -14,6 +15,8 @@ export async function getStaticPaths() {
 
 const { product, related } = Astro.props;
 const productUrl = new URL(`/products/${product.slug}`, Astro.site ?? Astro.url.origin).href;
+const imageToUrl = (image: ProductImage) => (typeof image === "string" ? image : new URL(image.src, Astro.url.origin).href);
+const productImages = product.images.map(imageToUrl);
 ---
 
 <BaseLayout
@@ -37,15 +40,28 @@ const productUrl = new URL(`/products/${product.slug}`, Astro.site ?? Astro.url.
           {
             product.images.map((image, index) => (
               <div class:list={["absolute inset-0", index !== 0 && "hidden"]} data-gallery-panel={index}>
-                <Image
-                  src={image}
-                  alt={`${product.name} — view ${index + 1}`}
-                  width={1440}
-                  height={1800}
-                  format="webp"
-                  loading={index === 0 ? "eager" : "lazy"}
-                  class="atelier-fade-in h-full w-full object-cover"
-                />
+                {
+                  typeof image === "string" ? (
+                    <img
+                      src={image}
+                      alt={`${product.name} — view ${index + 1}`}
+                      width="1440"
+                      height="1800"
+                      loading={index === 0 ? "eager" : "lazy"}
+                      class="atelier-fade-in h-full w-full object-cover"
+                    />
+                  ) : (
+                    <Image
+                      src={image}
+                      alt={`${product.name} — view ${index + 1}`}
+                      width={1440}
+                      height={1800}
+                      format="webp"
+                      loading={index === 0 ? "eager" : "lazy"}
+                      class="atelier-fade-in h-full w-full object-cover"
+                    />
+                  )
+                }
               </div>
             ))
           }
@@ -63,7 +79,13 @@ const productUrl = new URL(`/products/${product.slug}`, Astro.site ?? Astro.url.
                 aria-label={`Show view ${index + 1}`}
                 aria-pressed={index === 0 ? "true" : "false"}
               >
-                <Image src={image} alt="" width={360} height={360} format="webp" loading="lazy" class="h-full w-full object-cover" />
+                {
+                  typeof image === "string" ? (
+                    <img src={image} alt="" width="360" height="360" loading="lazy" class="h-full w-full object-cover" />
+                  ) : (
+                    <Image src={image} alt="" width={360} height={360} format="webp" loading="lazy" class="h-full w-full object-cover" />
+                  )
+                }
               </button>
             ))
           }
@@ -131,7 +153,7 @@ const productUrl = new URL(`/products/${product.slug}`, Astro.site ?? Astro.url.
     "@type": "Product",
     name: product.name,
     description: product.description,
-    image: product.images.map((image) => new URL(image.src, Astro.url.origin).href),
+    image: productImages,
     brand: {
       "@type": "Brand",
       name: "buweihao",

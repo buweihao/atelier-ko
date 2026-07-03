@@ -63,14 +63,32 @@ Sanity Studio files live in:
 - `sanity.config.ts`
 - `sanity.cli.ts`
 - `sanity/schemaTypes/productType.ts`
+- `/admin` — embedded Studio route when Sanity environment variables are available during build
 
 Set your real Sanity project before starting Studio:
 
 ```bash
-SANITY_STUDIO_PROJECT_ID=yourProjectId SANITY_STUDIO_DATASET=production npm run sanity:dev
+PUBLIC_SANITY_PROJECT_ID=yourProjectId PUBLIC_SANITY_DATASET=production npm run dev
 ```
 
-The current Astro frontend still reads products from `src/content/products/*.md`. To fully switch to Sanity, connect the frontend data layer to the Sanity Content Lake and map the schema fields to the existing product helpers.
+The Astro frontend now reads products from Sanity first. If Sanity is not configured, fails to respond, or has no valid product documents with images, it falls back to `src/content/products/*.md`.
+
+Required Cloudflare Pages environment variables:
+
+```text
+PUBLIC_SANITY_PROJECT_ID=yourProjectId
+PUBLIC_SANITY_DATASET=production
+PUBLIC_SANITY_API_VERSION=2026-07-03
+SANITY_STUDIO_PROJECT_ID=yourProjectId
+SANITY_STUDIO_DATASET=production
+```
+
+In Sanity Manage, add CORS origins for:
+
+- `http://localhost:4321`
+- `https://atelier-ko.weihaobu.cn`
+
+Enable credentials for the Studio origins. To rebuild the static Cloudflare site after content changes, add a Sanity webhook for publish/unpublish events that calls your Cloudflare Pages Deploy Hook. Do not commit the deploy hook URL to the repository.
 
 ## Deployment
 
