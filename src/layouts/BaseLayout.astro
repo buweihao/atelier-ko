@@ -4,8 +4,8 @@ import SiteFooter from "@/components/SiteFooter.astro";
 import SiteHeader from "@/components/SiteHeader.astro";
 
 const {
-  title = "Atelier Kō — Hand-made furniture from the northern woods",
-  description = "A small Swedish atelier crafting solid oak, ash and walnut furniture by hand. Made to order in Småland.",
+  title = "buweihao — 精简有效的个人护肤品牌",
+  description = "buweihao 是一个面向日常护理的电商产品展示站，覆盖清洁、补水、防晒与抗衰四类核心护肤产品。",
   image,
   noindex = false,
   includeHeader = true,
@@ -17,13 +17,13 @@ const ogImage = image ? new URL(image.src ?? image, Astro.site ?? Astro.url.orig
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="author" content="Atelier Kō" />
+    <meta name="author" content="buweihao" />
     <meta name="theme-color" content="#f8f7f4" />
     <link rel="canonical" href={canonicalUrl.href} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -31,7 +31,7 @@ const ogImage = image ? new URL(image.src ?? image, Astro.site ?? Astro.url.orig
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:site_name" content="Atelier Kō" />
+    <meta property="og:site_name" content="buweihao" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalUrl.href} />
     {ogImage && <meta property="og:image" content={ogImage} />}
@@ -67,7 +67,7 @@ const ogImage = image ? new URL(image.src ?? image, Astro.site ?? Astro.url.orig
             node.textContent = `(${total})`;
           });
           document.querySelectorAll("[data-cart-label]").forEach((node) => {
-            node.setAttribute("aria-label", `Cart, ${total} ${total === 1 ? "item" : "items"}`);
+            node.setAttribute("aria-label", `购物车，${total} 件商品`);
           });
         }
 
@@ -113,7 +113,7 @@ const ogImage = image ? new URL(image.src ?? image, Astro.site ?? Astro.url.orig
       href="#main-content"
       class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:text-[var(--color-base)]"
     >
-      Skip to content
+      跳到主要内容
     </a>
     {includeHeader && <SiteHeader currentPath={Astro.url.pathname} />}
     <div>

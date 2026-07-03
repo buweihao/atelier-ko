@@ -17,14 +17,14 @@ const productUrl = new URL(`/products/${product.slug}`, Astro.site ?? Astro.url.
 ---
 
 <BaseLayout
-  title={`${product.name} — Atelier Kō`}
+  title={`${product.name} — buweihao`}
   description={product.description.slice(0, 155)}
   image={product.images[0]}
 >
   <main id="main-content">
   <div class="mx-auto max-w-screen-xl px-6 pt-8">
     <nav class="flex gap-2 text-xs uppercase tracking-widest text-faded" aria-label="Breadcrumb">
-      <a href="/catalog" class="hover:text-ink">Catalogue</a>
+      <a href="/products" class="hover:text-ink">产品</a>
       <span aria-hidden="true">/</span>
       <span class="text-ink" aria-current="page">{product.name}</span>
     </nav>
@@ -81,19 +81,19 @@ const productUrl = new URL(`/products/${product.slug}`, Astro.site ?? Astro.url.
           <p class="max-w-[44ch] text-pretty leading-relaxed text-faded">{product.description}</p>
           <dl class="space-y-3">
             <div class="flex justify-between border-b border-line py-2 text-sm">
-              <dt class="text-faded">Material</dt>
+              <dt class="text-faded">核心成分</dt>
               <dd>{product.material}</dd>
             </div>
             <div class="flex justify-between border-b border-line py-2 text-sm">
-              <dt class="text-faded">Dimensions</dt>
+              <dt class="text-faded">规格</dt>
               <dd>{product.dimensions}</dd>
             </div>
             <div class="flex justify-between border-b border-line py-2 text-sm">
-              <dt class="text-faded">Finish</dt>
+              <dt class="text-faded">肤感</dt>
               <dd>{product.finish}</dd>
             </div>
             <div class="flex justify-between border-b border-line py-2 text-sm">
-              <dt class="text-faded">Lead Time</dt>
+              <dt class="text-faded">发货</dt>
               <dd>{product.leadTime}</dd>
             </div>
           </dl>
@@ -104,20 +104,20 @@ const productUrl = new URL(`/products/${product.slug}`, Astro.site ?? Astro.url.
           data-add-to-cart={product.slug}
           class="w-full rounded-full bg-ink py-4 text-sm font-medium text-[var(--color-base)] ring-1 ring-ink transition-all hover:bg-accent hover:ring-accent active:scale-[0.98]"
         >
-          Add to Collection
+          加入购物车
         </button>
 
         <p class="text-[11px] uppercase tracking-widest text-faded">
-          Free white-glove delivery in EU · Worldwide on request
+          满额包邮 · 支持电商展示与后续后台接入
         </p>
       </div>
     </section>
 
     <section class="mt-40 space-y-12 border-t border-line pt-16">
       <div class="flex items-end justify-between gap-6">
-        <h2 class="font-serif text-3xl md:text-4xl">Pieces that sit well together</h2>
-        <a href="/catalog" class="text-xs uppercase tracking-widest underline underline-offset-4 hover:text-accent">
-          View all
+        <h2 class="font-serif text-3xl md:text-4xl">可以一起搭配的产品</h2>
+        <a href="/products" class="text-xs uppercase tracking-widest underline underline-offset-4 hover:text-accent">
+          查看全部
         </a>
       </div>
       <div class="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-3">
@@ -134,13 +134,13 @@ const productUrl = new URL(`/products/${product.slug}`, Astro.site ?? Astro.url.
     image: product.images.map((image) => new URL(image.src, Astro.url.origin).href),
     brand: {
       "@type": "Brand",
-      name: "Atelier Kō",
+      name: "buweihao",
     },
     material: product.material,
     url: productUrl,
     offers: {
       "@type": "Offer",
-      priceCurrency: "USD",
+      priceCurrency: "CNY",
       price: product.price,
       availability: "https://schema.org/PreOrder",
       url: productUrl,
@@ -173,7 +173,7 @@ const productUrl = new URL(`/products/${product.slug}`, Astro.site ?? Astro.url.
       let timer;
       addButton.addEventListener("click", () => {
         window.AtelierCart.add(addButton.dataset.addToCart, 1);
-        addButton.textContent = "Added to your archive →";
+        addButton.textContent = "已加入购物车 →";
         window.clearTimeout(timer);
         timer = window.setTimeout(() => {
           addButton.textContent = originalText;

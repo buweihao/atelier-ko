@@ -121,12 +121,12 @@
 }
 
 :root {
-  --base: #f8f7f4;
-  --paper: #f1efea;
-  --ink: #27272a;
-  --faded: #71717a;
-  --accent: #5a2d10;
-  --line: #27272a14;
+  --base: #fbfdfb;
+  --paper: #eef7f2;
+  --ink: #17211d;
+  --faded: #61706a;
+  --accent: #2f8f73;
+  --line: #17211d16;
   --radius: 12px;
 }
 

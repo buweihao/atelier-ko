@@ -8,33 +8,33 @@ const cartProducts = products.map(productForJson);
 ---
 
 <BaseLayout
-  title="Your archive — Atelier Kō"
-  description="Review the pieces you've selected from the Atelier Kō catalogue."
+  title="购物车 — buweihao"
+  description="查看你已选择的 buweihao 护肤产品。"
   noindex={true}
 >
   <main id="main-content" class="mx-auto max-w-screen-xl px-6 py-12">
     <header class="mb-12 flex items-end justify-between border-b border-line pb-8">
       <div class="space-y-3">
-        <p class="text-xs uppercase tracking-[0.25em] text-faded">Your archive</p>
-        <h1 class="font-serif text-5xl leading-none md:text-6xl" data-cart-title>Empty for now.</h1>
+        <p class="text-xs uppercase tracking-[0.25em] text-faded">购物车</p>
+        <h1 class="font-serif text-5xl leading-none md:text-6xl" data-cart-title>暂时为空。</h1>
       </div>
       <div class="hidden gap-8 text-[11px] uppercase tracking-[0.2em] md:flex">
-        <span data-cart-step="cart" class="text-ink">01 · Selection</span>
-        <span data-cart-step="details" class="text-faded">02 · Details</span>
-        <span class="text-faded">03 · Confirmation</span>
+        <span data-cart-step="cart" class="text-ink">01 · 商品</span>
+        <span data-cart-step="details" class="text-faded">02 · 信息</span>
+        <span class="text-faded">03 · 确认</span>
       </div>
     </header>
 
     <div class="py-32 text-center" data-cart-empty>
       <div class="space-y-6">
         <p class="mx-auto max-w-md text-faded">
-          You haven't added any pieces yet. The catalogue is small, slow, and waiting.
+          你还没有添加产品。可以先从清洁、补水、防晒、抗衰四类产品开始浏览。
         </p>
         <a
-          href="/catalog"
+          href="/products"
           class="inline-block rounded-full bg-ink px-6 py-3 text-xs uppercase tracking-widest text-[var(--color-base)] transition-colors hover:bg-accent"
         >
-          Browse the catalogue
+          浏览产品
         </a>
       </div>
     </div>
@@ -49,7 +49,7 @@ const cartProducts = products.map(productForJson);
           data-checkout-form
         >
           <fieldset class="space-y-4">
-            <legend class="mb-2 text-xs uppercase tracking-[0.25em] text-faded">Contact</legend>
+            <legend class="mb-2 text-xs uppercase tracking-[0.25em] text-faded">联系信息</legend>
             <label class="block">
               <span class="text-[11px] uppercase tracking-widest text-faded">Email</span>
               <input
@@ -62,35 +62,35 @@ const cartProducts = products.map(productForJson);
           </fieldset>
 
           <fieldset class="space-y-4">
-            <legend class="mb-2 text-xs uppercase tracking-[0.25em] text-faded">Delivery</legend>
+            <legend class="mb-2 text-xs uppercase tracking-[0.25em] text-faded">收货信息</legend>
             <div class="grid grid-cols-2 gap-4">
               <label class="block">
-                <span class="text-[11px] uppercase tracking-widest text-faded">First name</span>
-                <input required placeholder="Astrid" class="mt-1 w-full border-b border-line bg-transparent py-2 text-sm transition-colors focus:border-ink focus:outline-none" />
+                <span class="text-[11px] uppercase tracking-widest text-faded">名</span>
+                <input required placeholder="伟豪" class="mt-1 w-full border-b border-line bg-transparent py-2 text-sm transition-colors focus:border-ink focus:outline-none" />
               </label>
               <label class="block">
-                <span class="text-[11px] uppercase tracking-widest text-faded">Last name</span>
-                <input required placeholder="Lindgren" class="mt-1 w-full border-b border-line bg-transparent py-2 text-sm transition-colors focus:border-ink focus:outline-none" />
+                <span class="text-[11px] uppercase tracking-widest text-faded">姓</span>
+                <input required placeholder="卜" class="mt-1 w-full border-b border-line bg-transparent py-2 text-sm transition-colors focus:border-ink focus:outline-none" />
               </label>
             </div>
             <label class="block">
-              <span class="text-[11px] uppercase tracking-widest text-faded">Address</span>
-              <input required placeholder="Storgatan 12" class="mt-1 w-full border-b border-line bg-transparent py-2 text-sm transition-colors focus:border-ink focus:outline-none" />
+              <span class="text-[11px] uppercase tracking-widest text-faded">地址</span>
+              <input required placeholder="详细收货地址" class="mt-1 w-full border-b border-line bg-transparent py-2 text-sm transition-colors focus:border-ink focus:outline-none" />
             </label>
             <div class="grid grid-cols-2 gap-4">
               <label class="block">
-                <span class="text-[11px] uppercase tracking-widest text-faded">City</span>
-                <input required placeholder="Växjö" class="mt-1 w-full border-b border-line bg-transparent py-2 text-sm transition-colors focus:border-ink focus:outline-none" />
+                <span class="text-[11px] uppercase tracking-widest text-faded">城市</span>
+                <input required placeholder="杭州" class="mt-1 w-full border-b border-line bg-transparent py-2 text-sm transition-colors focus:border-ink focus:outline-none" />
               </label>
               <label class="block">
-                <span class="text-[11px] uppercase tracking-widest text-faded">Postcode</span>
-                <input required placeholder="352 31" class="mt-1 w-full border-b border-line bg-transparent py-2 text-sm transition-colors focus:border-ink focus:outline-none" />
+                <span class="text-[11px] uppercase tracking-widest text-faded">邮编</span>
+                <input required placeholder="310000" class="mt-1 w-full border-b border-line bg-transparent py-2 text-sm transition-colors focus:border-ink focus:outline-none" />
               </label>
             </div>
           </fieldset>
 
           <fieldset class="space-y-4">
-            <legend class="mb-2 text-xs uppercase tracking-[0.25em] text-faded">Payment</legend>
+            <legend class="mb-2 text-xs uppercase tracking-[0.25em] text-faded">支付预览</legend>
             <label class="block">
               <span class="text-[11px] uppercase tracking-widest text-faded">Card number</span>
               <input
@@ -134,18 +134,18 @@ const cartProducts = products.map(productForJson);
       </section>
 
       <aside class="space-y-8 rounded-[min(1vw,12px)] bg-paper p-8 lg:sticky lg:top-24 lg:col-span-5">
-        <h2 class="text-xs uppercase tracking-[0.25em] text-faded">Order summary</h2>
+        <h2 class="text-xs uppercase tracking-[0.25em] text-faded">订单摘要</h2>
         <div class="space-y-3">
           <div class="flex justify-between text-sm">
-            <span class="text-faded">Subtotal</span>
+            <span class="text-faded">商品小计</span>
             <span class="tabular-nums" data-cart-subtotal>$0</span>
           </div>
           <div class="flex justify-between text-sm">
-            <span class="text-faded">White-glove delivery</span>
+            <span class="text-faded">配送</span>
             <span class="tabular-nums" data-cart-shipping>$0</span>
           </div>
           <div class="flex items-baseline justify-between border-t border-line pt-3">
-            <span class="text-sm">Total</span>
+            <span class="text-sm">合计</span>
             <span class="font-serif text-3xl tabular-nums" data-cart-total>$0</span>
           </div>
         </div>
@@ -155,18 +155,18 @@ const cartProducts = products.map(productForJson);
             class="w-full rounded-full bg-ink py-4 text-sm font-medium text-[var(--color-base)] transition-colors hover:bg-accent"
             data-cart-primary
           >
-            Continue to details
+            继续填写信息
           </button>
           <button
             type="button"
             class="hidden w-full text-[11px] uppercase tracking-widest text-faded underline underline-offset-4 transition-colors hover:text-ink"
             data-cart-back
           >
-            Back to selection
+            返回商品
           </button>
         </div>
         <p class="border-t border-line pt-6 text-[11px] leading-relaxed text-faded">
-          Each piece is signed and dated. Pieces are wrapped in unbleached cotton and shipped in reusable wooden crates. Returned crates earn a small credit toward your next order.
+          这是电商站展示用购物车预览，支付尚未接入。后续可连接真实支付、库存与 Sanity 后台数据。
         </p>
       </aside>
     </div>
@@ -185,7 +185,7 @@ const cartProducts = products.map(productForJson);
                     {product.name}
                   </a>
                   <p class="text-xs text-faded">{product.material} · {product.finish}</p>
-                  <p class="text-[11px] uppercase tracking-widest text-faded">Lead time {product.leadTime}</p>
+                  <p class="text-[11px] uppercase tracking-widest text-faded">发货 {product.leadTime}</p>
                 </div>
                 <span class="whitespace-nowrap text-sm tabular-nums" data-row-line-price>{formatPrice(product.price)}</span>
               </div>
@@ -195,7 +195,7 @@ const cartProducts = products.map(productForJson);
                     type="button"
                     class="grid size-8 place-items-center text-sm transition-colors hover:bg-paper"
                     data-cart-action="decrease"
-                    aria-label={`Decrease ${product.name} quantity`}
+                    aria-label={`减少 ${product.name} 数量`}
                   >
                     −
                   </button>
@@ -204,7 +204,7 @@ const cartProducts = products.map(productForJson);
                     type="button"
                     class="grid size-8 place-items-center text-sm transition-colors hover:bg-paper"
                     data-cart-action="increase"
-                    aria-label={`Increase ${product.name} quantity`}
+                    aria-label={`增加 ${product.name} 数量`}
                   >
                     +
                   </button>
@@ -213,9 +213,9 @@ const cartProducts = products.map(productForJson);
                   type="button"
                   class="text-[11px] uppercase tracking-widest text-faded underline underline-offset-4 hover:text-ink"
                   data-cart-action="remove"
-                  aria-label={`Remove ${product.name} from cart`}
+                  aria-label={`从购物车移除 ${product.name}`}
                 >
-                  Remove
+                  移除
                 </button>
               </div>
             </div>
@@ -233,7 +233,7 @@ const cartProducts = products.map(productForJson);
     const formatPrice = (value) =>
       new Intl.NumberFormat("en-US", {
         style: "currency",
-        currency: "USD",
+        currency: "CNY",
         maximumFractionDigits: 0,
       }).format(value);
 
@@ -282,12 +282,12 @@ const cartProducts = products.map(productForJson);
 
       if (rows.length === 0) step = "cart";
 
-      title.textContent = rows.length === 0 ? "Empty for now." : step === "cart" ? "Review your selection." : "A few details.";
+      title.textContent = rows.length === 0 ? "暂时为空。" : step === "cart" ? "确认你的产品。" : "填写收货信息。";
       empty.classList.toggle("hidden", rows.length !== 0);
       filled.classList.toggle("hidden", rows.length === 0);
       list.classList.toggle("hidden", step !== "cart");
       form.classList.toggle("hidden", step !== "details");
-      primary.textContent = step === "cart" ? "Continue to details" : `Reserve · ${formatPrice(total)}`;
+      primary.textContent = step === "cart" ? "继续填写信息" : `提交预览 · ${formatPrice(total)}`;
       back.classList.toggle("hidden", step !== "details");
       stepCart.className = step === "cart" ? "text-ink" : "text-faded";
       stepDetails.className = step === "details" ? "text-ink" : "text-faded";
@@ -325,7 +325,7 @@ const cartProducts = products.map(productForJson);
 
     form.addEventListener("submit", (event) => {
       event.preventDefault();
-      alert("Checkout is a design preview — payment is not connected.");
+      alert("当前为电商展示预览，支付尚未接入。");
     });
 
     cardNumber.addEventListener("input", () => {

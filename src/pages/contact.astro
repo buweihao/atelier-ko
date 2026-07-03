@@ -1,0 +1,63 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="联系 — buweihao"
+  description="联系 buweihao，邮箱 buweihao@qq.com，社交链接 baidu.com。"
+>
+  <main id="main-content">
+    <section class="mx-auto max-w-screen-xl px-6 pb-20 pt-20 md:pb-28 md:pt-28">
+      <p class="mb-6 flex items-center gap-3 text-[11px] uppercase tracking-[0.3em] text-faded">
+        <span class="inline-block h-px w-8 bg-ink/40"></span>
+        Contact
+      </p>
+      <h1 class="max-w-[18ch] text-balance font-serif text-5xl leading-[0.95] md:text-7xl">
+        有合作、上架或后台需求，<span class="italic text-accent">可以直接联系。</span>
+      </h1>
+      <p class="mt-8 max-w-[58ch] text-lg leading-relaxed text-faded">
+        当前站点已按电商产品展示结构搭建，并预留 Sanity 后台配置。你可以通过邮箱或社交链接继续完善产品、内容和发布流程。
+      </p>
+    </section>
+
+    <section class="mx-auto max-w-screen-xl px-6 pb-32">
+      <div class="grid gap-8 border-y border-line py-12 md:grid-cols-3">
+        <div class="space-y-3">
+          <h2 class="text-xs uppercase tracking-[0.25em] text-faded">邮箱</h2>
+          <a href="mailto:buweihao@qq.com" class="font-serif text-3xl transition-colors hover:text-accent">buweihao@qq.com</a>
+        </div>
+        <div class="space-y-3">
+          <h2 class="text-xs uppercase tracking-[0.25em] text-faded">社交链接</h2>
+          <a href="https://baidu.com" class="font-serif text-3xl transition-colors hover:text-accent">baidu.com</a>
+        </div>
+        <div class="space-y-3">
+          <h2 class="text-xs uppercase tracking-[0.25em] text-faded">生产域名</h2>
+          <a href="https://atelier-ko.weihaobu.cn" class="font-serif text-3xl transition-colors hover:text-accent">atelier-ko.weihaobu.cn</a>
+        </div>
+      </div>
+
+      <form class="mt-16 grid gap-5 md:grid-cols-2" method="post" action="mailto:buweihao@qq.com">
+        <label class="block">
+          <span class="text-[11px] uppercase tracking-widest text-faded">姓名</span>
+          <input name="name" required class="mt-2 w-full border-b border-line bg-transparent py-3 text-sm transition-colors focus:border-ink focus:outline-none" />
+        </label>
+        <label class="block">
+          <span class="text-[11px] uppercase tracking-widest text-faded">邮箱</span>
+          <input name="email" type="email" required class="mt-2 w-full border-b border-line bg-transparent py-3 text-sm transition-colors focus:border-ink focus:outline-none" />
+        </label>
+        <label class="block md:col-span-2">
+          <span class="text-[11px] uppercase tracking-widest text-faded">留言</span>
+          <textarea name="message" required rows="5" class="mt-2 w-full resize-y border-b border-line bg-transparent py-3 text-sm transition-colors focus:border-ink focus:outline-none"></textarea>
+        </label>
+        <div class="md:col-span-2">
+          <button
+            type="submit"
+            class="inline-flex items-center justify-center gap-3 rounded-full bg-ink px-7 py-4 text-[11px] font-medium uppercase tracking-[0.2em] text-[var(--color-base)] transition-colors hover:bg-accent"
+          >
+            发送邮件
+          </button>
+        </div>
+      </form>
+    </section>
+  </main>
+</BaseLayout>

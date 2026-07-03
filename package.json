@@ -1,19 +1,22 @@
 {
-  "name": "atelier-ko-astro-theme",
+  "name": "buweihao-atelier-ko",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://atelier-ko-topaz.vercel.app/",
+  "homepage": "https://atelier-ko.weihaobu.cn/",
   "type": "module",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "sanity:dev": "sanity dev",
+    "sanity:deploy": "sanity deploy"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
     "@tailwindcss/postcss": "^4.3.1",
     "astro": "^6.4.8",
+    "sanity": "^4.21.1",
     "tailwindcss": "^4.1.17"
   },
   "devDependencies": {
