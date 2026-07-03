@@ -9,7 +9,9 @@ lerna-debug.log*
 
 node_modules
 .astro
-dist
+# Commit dist so Cloudflare Pages can deploy even when the dashboard build command is empty.
+!dist/
+!dist/**
 dist-ssr
 .output
 .vinxi

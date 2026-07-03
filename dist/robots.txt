@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://atelier-ko.weihaobu.cn/sitemap-index.xml

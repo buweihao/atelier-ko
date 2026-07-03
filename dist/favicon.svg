@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="buweihao">
+  <rect width="64" height="64" rx="16" fill="#fbfdfb"/>
+  <rect x="5.5" y="5.5" width="53" height="53" rx="12.5" fill="none" stroke="#17211d" stroke-opacity=".16"/>
+  <circle cx="44" cy="18" r="6" fill="#2f8f73" opacity=".18"/>
+  <text x="32" y="42" text-anchor="middle" font-family="Georgia, serif" font-size="32" font-style="italic" fill="#17211d">b</text>
+</svg>

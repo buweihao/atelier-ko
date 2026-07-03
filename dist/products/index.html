@@ -1,0 +1,250 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>产品 — buweihao</title><meta name="description" content="浏览 buweihao 清洁、补水、防晒、抗衰护肤产品，按分类和功效筛选。"><meta name="author" content="buweihao"><meta name="theme-color" content="#f8f7f4"><link rel="canonical" href="https://atelier-ko.weihaobu.cn/products/"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta property="og:title" content="产品 — buweihao"><meta property="og:description" content="浏览 buweihao 清洁、补水、防晒、抗衰护肤产品，按分类和功效筛选。"><meta property="og:site_name" content="buweihao"><meta property="og:type" content="website"><meta property="og:url" content="https://atelier-ko.weihaobu.cn/products/"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="产品 — buweihao"><meta name="twitter:description" content="浏览 buweihao 清洁、补水、防晒、抗衰护肤产品，按分类和功效筛选。"><script>
+      (() => {
+        const storageKey = "atelier-ko-cart";
+
+        function readCart() {
+          try {
+            return JSON.parse(window.localStorage.getItem(storageKey) || "[]");
+          } catch {
+            return [];
+          }
+        }
+
+        function writeCart(items) {
+          window.localStorage.setItem(storageKey, JSON.stringify(items));
+          document.dispatchEvent(new CustomEvent("atelier-cart-change", { detail: items }));
+        }
+
+        function count(items = readCart()) {
+          return items.reduce((total, item) => total + Number(item.quantity || 0), 0);
+        }
+
+        function updateBadges() {
+          const total = count();
+          document.querySelectorAll("[data-cart-count]").forEach((node) => {
+            node.textContent = `(${total})`;
+          });
+          document.querySelectorAll("[data-cart-label]").forEach((node) => {
+            node.setAttribute("aria-label", `购物车，${total} 件商品`);
+          });
+        }
+
+        window.AtelierCart = {
+          read: readCart,
+          write: writeCart,
+          count,
+          add(slug, quantity = 1) {
+            const items = readCart();
+            const existing = items.find((item) => item.slug === slug);
+            if (existing) {
+              existing.quantity += quantity;
+              writeCart(items);
+              return;
+            }
+            writeCart([...items, { slug, quantity }]);
+          },
+          remove(slug) {
+            writeCart(readCart().filter((item) => item.slug !== slug));
+          },
+          setQuantity(slug, quantity) {
+            if (quantity <= 0) {
+              this.remove(slug);
+              return;
+            }
+            writeCart(readCart().map((item) => (item.slug === slug ? { ...item, quantity } : item)));
+          },
+          updateBadges,
+        };
+
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", updateBadges);
+        } else {
+          updateBadges();
+        }
+        window.addEventListener("storage", updateBadges);
+        document.addEventListener("atelier-cart-change", updateBadges);
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.cK8rY8VI.css"><style>.catalog-chip[data-astro-cid-ttgomkr6]{border-radius:9999px;padding:.375rem 1rem;font-size:.75rem;font-weight:500;line-height:1rem;color:var(--color-ink);box-shadow:inset 0 0 0 1px var(--color-line);transition:background-color .18s ease,color .18s ease,box-shadow .18s ease}.catalog-chip[data-astro-cid-ttgomkr6]:hover{background-color:var(--color-paper)}.catalog-chip[data-astro-cid-ttgomkr6].is-active{background-color:var(--color-ink);color:var(--color-base);box-shadow:inset 0 0 0 1px var(--color-ink)}
+</style></head> <body class="bg-base text-ink"> <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:text-[var(--color-base)]">
+跳到主要内容
+</a> <nav class="sticky top-0 z-50 border-b border-line bg-base/80 backdrop-blur-md" aria-label="Main navigation"> <div class="mx-auto flex h-16 max-w-screen-xl items-center justify-between px-6"> <a href="/" class="font-serif text-xl italic tracking-tight" aria-label="buweihao 首页">
+buweihao
+</a> <div class="hidden items-center gap-8 text-sm md:flex"> <a href="/" class="transition-colors hover:text-accent text-faded"> 首页 </a><a href="/products" class="transition-colors hover:text-accent text-ink" aria-current="page"> 产品 </a><a href="/about" class="transition-colors hover:text-accent text-faded"> 关于 </a><a href="/contact" class="transition-colors hover:text-accent text-faded"> 联系 </a> </div> <div class="flex items-center gap-3"> <a href="/cart" data-cart-label aria-label="购物车，0 件商品" class="relative inline-flex items-center gap-1.5 p-1 text-sm font-medium transition-colors hover:text-accent"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M6 8h12l-1 12H7L6 8Z"></path> <path d="M9 8a3 3 0 0 1 6 0"></path> </svg> <span class="tabular-nums text-faded" data-cart-count>(0)</span> </a> <button type="button" class="inline-flex h-10 w-10 items-center justify-center rounded-full text-ink transition-colors hover:text-accent md:hidden" aria-label="打开菜单" aria-controls="mobile-menu" aria-expanded="false" data-mobile-menu-open> <span class="sr-only">打开菜单</span> <span class="flex w-4 flex-col gap-1.5" aria-hidden="true"> <span class="h-px w-full bg-current"></span> <span class="h-px w-full bg-current"></span> <span class="h-px w-full bg-current"></span> </span> </button> </div> </div> </nav> <div id="mobile-menu" class="fixed inset-0 z-[60] hidden h-dvh overflow-hidden bg-base text-ink md:hidden" role="dialog" aria-modal="true" aria-label="Mobile menu" data-mobile-menu> <div class="flex h-full flex-col px-6 pb-6 pt-5"> <div class="flex h-11 items-center justify-between"> <a href="/" class="font-serif text-xl italic tracking-tight" aria-label="buweihao 首页" data-mobile-menu-link>
+buweihao
+</a> <button type="button" class="inline-flex h-10 w-10 items-center justify-center rounded-full text-ink transition-colors hover:text-accent" aria-label="关闭菜单" data-mobile-menu-close> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"> <path d="M6 6l12 12"></path> <path d="M18 6L6 18"></path> </svg> </button> </div> <div class="flex min-h-0 flex-1 flex-col gap-5 pt-7"> <div class="space-y-2.5"> <a href="/" class="block font-serif text-4xl leading-none transition-colors hover:text-accent text-faded" data-mobile-menu-link> 首页 </a><a href="/products" class="block font-serif text-4xl leading-none transition-colors hover:text-accent text-ink" aria-current="page" data-mobile-menu-link> 产品 </a><a href="/about" class="block font-serif text-4xl leading-none transition-colors hover:text-accent text-faded" data-mobile-menu-link> 关于 </a><a href="/contact" class="block font-serif text-4xl leading-none transition-colors hover:text-accent text-faded" data-mobile-menu-link> 联系 </a> <a href="/cart" data-cart-label aria-label="Cart, 0 items" class="inline-flex items-center gap-2 pt-1 text-sm uppercase tracking-[0.2em] text-faded transition-colors hover:text-ink" data-mobile-menu-link>
+购物车
+<span class="tabular-nums" data-cart-count>(0)</span> </a> </div> <a href="/products/hydration-serum" class="group block border-y border-line py-4" data-mobile-menu-link> <div class="aspect-[16/10] max-h-[32dvh] overflow-hidden rounded-md bg-paper"> <img src="/_astro/buweihao-hydration.C1MTDFaI_2an4Y6.webp" alt="玻尿酸沁润精华 - 轻盈补水，打底服帖" loading="lazy" decoding="async" width="900" height="560" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"> </div> <div class="mt-3 flex items-end justify-between gap-4"> <div class="min-w-0 space-y-1.5"> <p class="text-[10px] uppercase tracking-[0.3em] text-faded">精选产品</p> <p class="font-serif text-3xl leading-none">玻尿酸沁润精华</p> <p class="text-sm leading-relaxed text-faded">轻盈补水，打底服帖</p> </div> <p class="shrink-0 pb-0.5 text-xs uppercase tracking-[0.2em] text-accent"> ¥189 </p> </div> </a> <div class="mt-auto space-y-2 text-sm"> <p class="text-[10px] uppercase tracking-[0.3em] text-faded">联系</p> <a href="mailto:buweihao@qq.com" class="block transition-colors hover:text-accent" data-mobile-menu-link>
+buweihao@qq.com
+</a> </div> </div> </div> </div> <script>
+  (() => {
+    const menu = document.querySelector("[data-mobile-menu]");
+    const openButton = document.querySelector("[data-mobile-menu-open]");
+    const closeButton = document.querySelector("[data-mobile-menu-close]");
+
+    if (!menu || !openButton || !closeButton) return;
+
+    const focusableSelector = [
+      "a[href]",
+      "button:not([disabled])",
+      "input:not([disabled])",
+      "select:not([disabled])",
+      "textarea:not([disabled])",
+      '[tabindex]:not([tabindex="-1"])',
+    ].join(",");
+    let lastFocusedElement;
+
+    function getFocusable() {
+      return Array.from(menu.querySelectorAll(focusableSelector)).filter((element) => {
+        return element instanceof HTMLElement && element.offsetParent !== null;
+      });
+    }
+
+    function lockScroll() {
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+    }
+
+    function unlockScroll() {
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    }
+
+    function openMenu() {
+      lastFocusedElement = document.activeElement;
+      menu.classList.remove("hidden");
+      openButton.setAttribute("aria-expanded", "true");
+      lockScroll();
+      closeButton.focus({ preventScroll: true });
+    }
+
+    function closeMenu({ restoreFocus = true } = {}) {
+      menu.classList.add("hidden");
+      openButton.setAttribute("aria-expanded", "false");
+      unlockScroll();
+
+      if (restoreFocus && lastFocusedElement instanceof HTMLElement) {
+        lastFocusedElement.focus({ preventScroll: true });
+      }
+    }
+
+    openButton.addEventListener("click", openMenu);
+    closeButton.addEventListener("click", () => closeMenu());
+
+    menu.querySelectorAll("[data-mobile-menu-link]").forEach((link) => {
+      link.addEventListener("click", () => closeMenu({ restoreFocus: false }));
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (menu.classList.contains("hidden")) return;
+
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeMenu();
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+
+      const focusable = getFocusable();
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (!first || !last) return;
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.matchMedia("(min-width: 768px)").matches && !menu.classList.contains("hidden")) {
+        closeMenu({ restoreFocus: false });
+      }
+    });
+  })();
+</script> <div>  <main id="main-content" data-astro-cid-ttgomkr6> <section class="mx-auto max-w-screen-xl px-6 pb-12 pt-20 md:pb-16 md:pt-28" data-astro-cid-ttgomkr6> <p class="mb-6 flex items-center gap-3 text-[11px] uppercase tracking-[0.3em] text-faded" data-astro-cid-ttgomkr6> <span class="inline-block h-px w-8 bg-ink/40" data-astro-cid-ttgomkr6></span>
+Products
+</p> <h1 class="max-w-[18ch] text-balance font-serif text-5xl leading-[0.95] md:text-6xl" data-astro-cid-ttgomkr6>
+四类护肤产品，<span class="italic text-accent" data-astro-cid-ttgomkr6>满足日常护理。</span> </h1> <p class="mt-6 max-w-[52ch] leading-relaxed text-faded" data-astro-cid-ttgomkr6>
+从清洁开始，到补水、防晒与夜间抗衰修护，buweihao 以清晰的产品结构帮助用户建立稳定的护肤流程。
+</p> </section> <div class="mx-auto max-w-screen-xl px-6 pb-32" data-astro-cid-ttgomkr6> <section class="border-t border-line pb-12 pt-8" aria-label="产品筛选" data-astro-cid-ttgomkr6> <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between" data-astro-cid-ttgomkr6> <div class="space-y-4" data-astro-cid-ttgomkr6> <h2 class="text-xs uppercase tracking-[0.25em] text-faded" data-astro-cid-ttgomkr6> <span data-catalog-count data-astro-cid-ttgomkr6>4</span> <span data-catalog-count-label data-astro-cid-ttgomkr6>件产品</span> </h2> <div class="flex flex-wrap items-center gap-2" data-filter-group="category" data-astro-cid-ttgomkr6> <button class="catalog-chip is-active" type="button" data-filter-value="all" aria-pressed="true" data-astro-cid-ttgomkr6>全部分类</button> <button class="catalog-chip" type="button" data-filter-value="清洁" aria-pressed="false" data-astro-cid-ttgomkr6>清洁</button><button class="catalog-chip" type="button" data-filter-value="补水" aria-pressed="false" data-astro-cid-ttgomkr6>补水</button><button class="catalog-chip" type="button" data-filter-value="防晒" aria-pressed="false" data-astro-cid-ttgomkr6>防晒</button><button class="catalog-chip" type="button" data-filter-value="抗衰" aria-pressed="false" data-astro-cid-ttgomkr6>抗衰</button> </div> <div class="flex flex-wrap items-center gap-2" data-filter-group="material" data-astro-cid-ttgomkr6> <button class="catalog-chip is-active" type="button" data-filter-value="all" aria-pressed="true" data-astro-cid-ttgomkr6>全部功效</button> <button class="catalog-chip" type="button" data-filter-value="氨基酸表活" aria-pressed="false" data-astro-cid-ttgomkr6>氨基酸表活</button><button class="catalog-chip" type="button" data-filter-value="玻尿酸复配" aria-pressed="false" data-astro-cid-ttgomkr6>玻尿酸复配</button><button class="catalog-chip" type="button" data-filter-value="轻透防晒体系" aria-pressed="false" data-astro-cid-ttgomkr6>轻透防晒体系</button><button class="catalog-chip" type="button" data-filter-value="胜肽与植萃油脂" aria-pressed="false" data-astro-cid-ttgomkr6>胜肽与植萃油脂</button> </div> </div> <label class="flex items-center gap-3 text-xs uppercase tracking-widest text-faded" data-astro-cid-ttgomkr6>
+排序
+<select class="border-b border-line bg-transparent py-1 pr-6 text-ink focus:border-ink focus:outline-none" data-catalog-sort data-astro-cid-ttgomkr6> <option value="featured" data-astro-cid-ttgomkr6>默认</option> <option value="price-asc" data-astro-cid-ttgomkr6>价格从低到高</option> <option value="price-desc" data-astro-cid-ttgomkr6>价格从高到低</option> </select> </label> </div> </section> <p class="hidden py-32 text-center font-serif text-2xl text-faded" data-catalog-empty data-astro-cid-ttgomkr6>
+没有匹配的产品。
+</p> <div class="grid grid-cols-1 gap-x-8 gap-y-16 md:grid-cols-2 lg:grid-cols-4" data-catalog-grid data-astro-cid-ttgomkr6> <article data-catalog-item data-category="清洁" data-material="氨基酸表活" data-price="129" data-index="0" data-astro-cid-ttgomkr6> <a href="/products/amino-cleanser" class="group block space-y-4" data-product-card> <div class="aspect-[4/5] overflow-hidden rounded-[min(1vw,12px)] bg-paper"> <img src="/_astro/buweihao-cleanser.k7tRbyMT_2rsgr7.webp" alt="氨基酸净透洁面 — 温和起泡，洗后不紧绷" loading="eager" decoding="sync" width="1024" height="1280" class="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.03]"> </div> <div class="flex items-start justify-between gap-4"> <div> <h2 class="text-sm font-medium">氨基酸净透洁面</h2> <p class="text-xs text-faded">温和起泡，洗后不紧绷</p> </div> <span class="text-sm tabular-nums">¥129</span> </div> </a> </article><article data-catalog-item data-category="补水" data-material="玻尿酸复配" data-price="189" data-index="1" data-astro-cid-ttgomkr6> <a href="/products/hydration-serum" class="group block space-y-4" data-product-card> <div class="aspect-[4/5] overflow-hidden rounded-[min(1vw,12px)] bg-paper"> <img src="/_astro/buweihao-hydration.C1MTDFaI_Z1JEPSk.webp" alt="玻尿酸沁润精华 — 轻盈补水，打底服帖" loading="eager" decoding="sync" width="1024" height="1280" class="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.03]"> </div> <div class="flex items-start justify-between gap-4"> <div> <h2 class="text-sm font-medium">玻尿酸沁润精华</h2> <p class="text-xs text-faded">轻盈补水，打底服帖</p> </div> <span class="text-sm tabular-nums">¥189</span> </div> </a> </article><article data-catalog-item data-category="防晒" data-material="轻透防晒体系" data-price="169" data-index="2" data-astro-cid-ttgomkr6> <a href="/products/daily-sunscreen" class="group block space-y-4" data-product-card> <div class="aspect-[4/5] overflow-hidden rounded-[min(1vw,12px)] bg-paper"> <img src="/_astro/buweihao-sunscreen.C7PfBsgB_tIfoQ.webp" alt="日常轻透防晒乳 — 清爽成膜，通勤友好" loading="eager" decoding="sync" width="1024" height="1280" class="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.03]"> </div> <div class="flex items-start justify-between gap-4"> <div> <h2 class="text-sm font-medium">日常轻透防晒乳</h2> <p class="text-xs text-faded">清爽成膜，通勤友好</p> </div> <span class="text-sm tabular-nums">¥169</span> </div> </a> </article><article data-catalog-item data-category="抗衰" data-material="胜肽与植萃油脂" data-price="259" data-index="3" data-astro-cid-ttgomkr6> <a href="/products/renewal-cream" class="group block space-y-4" data-product-card> <div class="aspect-[4/5] overflow-hidden rounded-[min(1vw,12px)] bg-paper"> <img src="/_astro/buweihao-aging.CuuT7GTJ_Z1BGYuH.webp" alt="胜肽焕活面霜 — 夜间滋养，柔润支撑" loading="eager" decoding="sync" width="1024" height="1280" class="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.03]"> </div> <div class="flex items-start justify-between gap-4"> <div> <h2 class="text-sm font-medium">胜肽焕活面霜</h2> <p class="text-xs text-faded">夜间滋养，柔润支撑</p> </div> <span class="text-sm tabular-nums">¥259</span> </div> </a> </article> </div> </div>  <script>
+      const grid = document.querySelector("[data-catalog-grid]");
+      const items = Array.from(document.querySelectorAll("[data-catalog-item]"));
+      const countNode = document.querySelector("[data-catalog-count]");
+      const countLabel = document.querySelector("[data-catalog-count-label]");
+      const empty = document.querySelector("[data-catalog-empty]");
+      const sort = document.querySelector("[data-catalog-sort]");
+      const filters = { category: "all", material: "all" };
+
+      function selectInitialCategory() {
+        const category = new URLSearchParams(window.location.search).get("category");
+        if (!category) return;
+        const button = document.querySelector(`[data-filter-group="category"] button[data-filter-value="${CSS.escape(category)}"]`);
+        if (!button) return;
+        filters.category = category;
+        button.parentElement.querySelectorAll("button").forEach((chip) => {
+          chip.classList.remove("is-active");
+          chip.setAttribute("aria-pressed", "false");
+        });
+        button.classList.add("is-active");
+        button.setAttribute("aria-pressed", "true");
+      }
+
+      function applyFilters() {
+        const visible = items.filter((item) => {
+          return (
+            (filters.category === "all" || item.dataset.category === filters.category) &&
+            (filters.material === "all" || item.dataset.material === filters.material)
+          );
+        });
+
+        visible.sort((a, b) => {
+          if (sort.value === "price-asc") return Number(a.dataset.price) - Number(b.dataset.price);
+          if (sort.value === "price-desc") return Number(b.dataset.price) - Number(a.dataset.price);
+          return Number(a.dataset.index) - Number(b.dataset.index);
+        });
+
+        items.forEach((item) => (item.hidden = true));
+        visible.forEach((item) => {
+          item.hidden = false;
+          grid.appendChild(item);
+        });
+
+        countNode.textContent = String(visible.length);
+        countLabel.textContent = "件产品";
+        empty.classList.toggle("hidden", visible.length > 0);
+        grid.classList.toggle("hidden", visible.length === 0);
+      }
+
+      document.querySelectorAll("[data-filter-group]").forEach((group) => {
+        group.addEventListener("click", (event) => {
+          const button = event.target.closest("button[data-filter-value]");
+          if (!button) return;
+          const key = group.dataset.filterGroup;
+          filters[key] = button.dataset.filterValue;
+          group.querySelectorAll("button").forEach((chip) => {
+            chip.classList.remove("is-active");
+            chip.setAttribute("aria-pressed", "false");
+          });
+          button.classList.add("is-active");
+          button.setAttribute("aria-pressed", "true");
+          applyFilters();
+        });
+      });
+
+      sort.addEventListener("change", applyFilters);
+      selectInitialCategory();
+      applyFilters();
+    </script> </main>  </div> <footer id="studio" class="mt-32 border-t border-line py-24"> <div class="mx-auto grid max-w-screen-xl grid-cols-1 gap-12 px-6 md:grid-cols-3"> <div class="space-y-4"> <div class="font-serif text-lg italic tracking-tight">buweihao</div> <p class="max-w-[30ch] text-sm leading-relaxed text-faded">
+专注清洁、补水、防晒与抗衰的个人护肤品牌，给日常护理留下更清晰的选择。
+</p> </div> <div class="space-y-4"> <h2 class="text-xs font-medium uppercase tracking-widest">导航</h2> <ul class="space-y-2 text-sm"> <li><a href="/products" class="text-faded transition-colors hover:text-ink">产品</a></li> <li><a href="/about" class="text-faded transition-colors hover:text-ink">关于</a></li> <li><a href="/contact" class="text-faded transition-colors hover:text-ink">联系</a></li> </ul> </div> <div class="space-y-4"> <h2 class="text-xs font-medium uppercase tracking-widest">联系</h2> <ul class="space-y-2 text-sm"> <li><a href="mailto:buweihao@qq.com" class="text-faded transition-colors hover:text-ink">buweihao@qq.com</a></li> <li><a href="https://baidu.com" class="text-faded transition-colors hover:text-ink">baidu.com</a></li> </ul> </div> </div> <div class="mx-auto mt-16 max-w-screen-xl px-6 text-[10px] uppercase tracking-[0.2em] text-faded">
+© 2026 buweihao — Daily skincare essentials.
+</div> </footer> </body></html>
