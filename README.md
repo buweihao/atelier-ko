@@ -73,6 +73,8 @@ PUBLIC_SANITY_PROJECT_ID=yourProjectId PUBLIC_SANITY_DATASET=production npm run 
 
 The Astro frontend now reads products from Sanity first. If Sanity is not configured, fails to respond, or has no valid product documents with images, it falls back to `src/content/products/*.md`.
 
+This site uses the Sanity document type `_type: "atelierProduct"` so it can share a Sanity project with other sites that use `_type: "product"` without schema collisions.
+
 Required Cloudflare Pages environment variables:
 
 ```text
@@ -81,6 +83,12 @@ PUBLIC_SANITY_DATASET=production
 PUBLIC_SANITY_API_VERSION=2026-07-03
 SANITY_STUDIO_PROJECT_ID=yourProjectId
 SANITY_STUDIO_DATASET=production
+```
+
+If you connect a Sanity webhook to the Cloudflare Deploy Hook, use this filter for this site:
+
+```groq
+_type in ["atelierProduct", "siteSettings", "category", "page"] && !(_id in path("drafts.**"))
 ```
 
 In Sanity Manage, add CORS origins for:

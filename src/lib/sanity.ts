@@ -46,7 +46,7 @@ export async function fetchSanityProducts(): Promise<SanityProductDocument[]> {
 
   productsRequest = sanityClient
     .fetch<SanityProductDocument[]>(`
-      *[_type == "product" && defined(slug.current)] | order(coalesce(order, 999) asc, name asc) {
+      *[_type == "atelierProduct" && defined(slug.current)] | order(coalesce(order, 999) asc, name asc) {
         name,
         "slug": slug.current,
         collection,
