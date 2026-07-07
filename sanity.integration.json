@@ -1,0 +1,14 @@
+{
+  "sanity": {
+    "enabled": true,
+    "projectId": "nlg7146k",
+    "dataset": "atelier-ko-production",
+    "apiVersion": "2026-07-03",
+    "studioPath": "/admin",
+    "corsOrigins": [
+      "http://localhost:4326",
+      "https://atelier-ko.weihaobu.cn"
+    ],
+    "webhookToCloudflare": true
+  }
+}

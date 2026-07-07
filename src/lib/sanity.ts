@@ -3,8 +3,8 @@ import { createImageUrlBuilder } from "@sanity/image-url";
 
 const env = import.meta.env;
 
-const projectId = env.PUBLIC_SANITY_PROJECT_ID ?? "8i1ohj6g";
-const dataset = env.PUBLIC_SANITY_DATASET ?? "production";
+const projectId = env.PUBLIC_SANITY_PROJECT_ID ?? "nlg7146k";
+const dataset = env.PUBLIC_SANITY_DATASET ?? "atelier-ko-production";
 const apiVersion = env.PUBLIC_SANITY_API_VERSION ?? "2026-07-03";
 
 export const hasSanityConfig = Boolean(projectId);

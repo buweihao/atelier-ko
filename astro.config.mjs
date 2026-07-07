@@ -3,10 +3,11 @@ import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
 import sanity from "@sanity/astro";
 
-const defaultSanityProjectId = "8i1ohj6g";
+const defaultSanityProjectId = "nlg7146k";
 const sanityProjectId =
   process.env.PUBLIC_SANITY_PROJECT_ID ?? process.env.SANITY_STUDIO_PROJECT_ID ?? defaultSanityProjectId;
-const sanityDataset = process.env.PUBLIC_SANITY_DATASET ?? process.env.SANITY_STUDIO_DATASET ?? "production";
+const sanityDataset =
+  process.env.PUBLIC_SANITY_DATASET ?? process.env.SANITY_STUDIO_DATASET ?? "atelier-ko-production";
 const sanityApiVersion = process.env.PUBLIC_SANITY_API_VERSION ?? "2026-07-03";
 
 export default defineConfig({
