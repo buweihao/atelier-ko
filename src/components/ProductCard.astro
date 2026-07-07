@@ -1,13 +1,14 @@
 ---
 import { Image } from "astro:assets";
 import { formatPrice } from "@/data/products.js";
+import { defaultLocale, localePath } from "@/lib/i18n";
 
-const { product, eager = false } = Astro.props;
+const { product, eager = false, lang = defaultLocale } = Astro.props;
 const image = product.images[0];
 const imageAlt = `${product.name} — ${product.shortDescription}`;
 ---
 
-<a href={`/products/${product.slug}`} class="group block space-y-4" data-product-card>
+<a href={localePath(lang, `/products/${product.slug}`)} class="group block space-y-4" data-product-card>
   <div class="aspect-[4/5] overflow-hidden rounded-[min(1vw,12px)] bg-paper">
     {
       typeof image === "string" ? (
@@ -39,6 +40,6 @@ const imageAlt = `${product.name} — ${product.shortDescription}`;
       <h2 class="text-sm font-medium">{product.name}</h2>
       <p class="text-xs text-faded">{product.shortDescription}</p>
     </div>
-    <span class="text-sm tabular-nums">{formatPrice(product.price)}</span>
+    <span class="text-sm tabular-nums">{formatPrice(product.price, lang)}</span>
   </div>
 </a>

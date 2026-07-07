@@ -1,6 +1,7 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import type { ImageMetadata } from "astro";
 import { fetchSanityProducts, imageUrlFor, type SanityProductDocument } from "@/lib/sanity.js";
+import { defaultLocale, localizeCategory, pickLocalized, type Locale } from "@/lib/i18n";
 
 type ProductEntry = CollectionEntry<"products">;
 export type ProductImage = ImageMetadata | string;
@@ -22,9 +23,71 @@ function byOrderThenName(a: Product, b: Product): number {
   return a.order - b.order || a.name.localeCompare(b.name);
 }
 
-function sanityProductToProduct(product: SanityProductDocument): Product | undefined {
+const localProductCopy: Record<string, Partial<Record<Locale, Partial<Product>>>> = {
+  "amino-cleanser": {
+    en: {
+      name: "Amino Acid Clarity Cleanser",
+      category: "Cleanse",
+      material: "Amino acid surfactants",
+      shortDescription: "Soft foam, never tight",
+      description:
+        "A gentle daily cleanser for morning and evening routines. Mild amino acid surfactants lift away excess oil and sunscreen residue while keeping skin comfortable after rinsing.",
+      finish: "Dense soft foam",
+      leadTime: "In stock",
+    },
+  },
+  "hydration-serum": {
+    en: {
+      name: "Hyaluronic Water Serum",
+      category: "Hydrate",
+      material: "Multi-weight hyaluronic acid",
+      shortDescription: "Light hydration, smooth layering",
+      description:
+        "A water-light serum for dry, dehydrated, or seasonal skin changes. It helps replenish surface hydration so creams and sunscreen layer more comfortably.",
+      finish: "Clear watery feel",
+      leadTime: "In stock",
+    },
+  },
+  "daily-sunscreen": {
+    en: {
+      name: "Daily Sheer Sunscreen",
+      category: "Protect",
+      material: "Sheer UV filter system",
+      shortDescription: "Fresh finish for daily wear",
+      description:
+        "A lightweight sunscreen for commuting and everyday outdoor exposure. The lotion spreads easily and leaves a breathable, clean finish.",
+      finish: "Light lotion",
+      leadTime: "In stock",
+    },
+  },
+  "renewal-cream": {
+    en: {
+      name: "Peptide Renewal Cream",
+      category: "Renew",
+      material: "Peptides and plant oils",
+      shortDescription: "Night nourishment, soft support",
+      description:
+        "A soft night cream with peptides, ceramides, and lightweight botanical oils to support comfort, barrier care, and the look of fine lines.",
+      finish: "Soft cream",
+      leadTime: "In stock",
+    },
+  },
+};
+
+function applyLocalProductLocale(product: Product, locale: Locale): Product {
+  if (locale === "zh") return product;
+  const copy = localProductCopy[product.slug]?.[locale];
+  return {
+    ...product,
+    ...copy,
+    collection: copy?.collection ?? product.collection,
+    dimensions: copy?.dimensions ?? product.dimensions,
+  };
+}
+
+function sanityProductToProduct(product: SanityProductDocument, locale: Locale): Product | undefined {
   const slug = product.slug?.trim();
-  const name = product.name?.trim();
+  const name = pickLocalized(product.name, product.nameI18n, locale);
   const images = (product.images ?? [])
     .map((image) => imageUrlFor(image.asset))
     .filter((url): url is string => Boolean(url));
@@ -34,15 +97,15 @@ function sanityProductToProduct(product: SanityProductDocument): Product | undef
   return {
     slug,
     name,
-    collection: product.collection?.trim() || "buweihao",
-    category: product.category?.trim() || "未分类",
-    material: product.material?.trim() || "核心成分待补充",
+    collection: pickLocalized(product.collection, product.collectionI18n, locale, "buweihao"),
+    category: pickLocalized(product.category, product.categoryI18n, locale, locale === "zh" ? "未分类" : "Uncategorized"),
+    material: pickLocalized(product.material, product.materialI18n, locale, locale === "zh" ? "核心成分待补充" : "Ingredients to be confirmed"),
     price: Number(product.price ?? 0),
-    shortDescription: product.shortDescription?.trim() || "产品简介待补充",
-    description: product.description?.trim() || product.shortDescription?.trim() || "产品详情待补充。",
-    dimensions: product.dimensions?.trim() || "规格待补充",
-    finish: product.finish?.trim() || "肤感待补充",
-    leadTime: product.leadTime?.trim() || "现货",
+    shortDescription: pickLocalized(product.shortDescription, product.shortDescriptionI18n, locale, locale === "zh" ? "产品简介待补充" : "Product summary to be confirmed"),
+    description: pickLocalized(product.description, product.descriptionI18n, locale, product.shortDescription?.trim() || (locale === "zh" ? "产品详情待补充。" : "Product details to be confirmed.")),
+    dimensions: pickLocalized(product.dimensions, product.dimensionsI18n, locale, locale === "zh" ? "规格待补充" : "Size to be confirmed"),
+    finish: pickLocalized(product.finish, product.finishI18n, locale, locale === "zh" ? "肤感待补充" : "Finish to be confirmed"),
+    leadTime: pickLocalized(product.leadTime, product.leadTimeI18n, locale, locale === "zh" ? "现货" : "In stock"),
     images,
     order: Number(product.order ?? 999),
   };
@@ -59,18 +122,18 @@ async function getLocalProducts(): Promise<Product[]> {
     .sort(byOrderThenName);
 }
 
-export async function getProducts(): Promise<Product[]> {
+export async function getProducts(locale: Locale = defaultLocale): Promise<Product[]> {
   const sanityProducts = (await fetchSanityProducts())
-    .map(sanityProductToProduct)
+    .map((product) => sanityProductToProduct(product, locale))
     .filter((product): product is Product => Boolean(product))
     .sort(byOrderThenName);
 
   if (sanityProducts.length > 0) return sanityProducts;
-  return getLocalProducts();
+  return (await getLocalProducts()).map((product) => applyLocalProductLocale(product, locale)).sort(byOrderThenName);
 }
 
-export async function getProduct(slug: string): Promise<Product | undefined> {
-  const products = await getProducts();
+export async function getProduct(slug: string, locale: Locale = defaultLocale): Promise<Product | undefined> {
+  const products = await getProducts(locale);
   return products.find((product) => product.slug === slug);
 }
 
@@ -98,13 +161,15 @@ export function getProductFilters(products: Product[]): {
   };
 }
 
-export function formatPrice(value: number): string {
-  return new Intl.NumberFormat("zh-CN", {
+export function formatPrice(value: number, locale: Locale = "zh"): string {
+  return new Intl.NumberFormat(locale === "zh" ? "zh-CN" : "en-US", {
     style: "currency",
     currency: "CNY",
     maximumFractionDigits: 0,
   }).format(value);
 }
+
+export { localizeCategory };
 
 export function productForJson(product: Product) {
   return {

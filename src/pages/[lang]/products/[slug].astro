@@ -1,0 +1,220 @@
+---
+import { Image } from "astro:assets";
+import ProductCard from "@/components/ProductCard.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { formatPrice, getProducts, getRelated } from "@/data/products.js";
+import { isLocale, locales, localePath, type Locale } from "@/lib/i18n";
+import type { ProductImage } from "@/data/products.js";
+
+export async function getStaticPaths() {
+  const paths = [];
+  for (const lang of locales) {
+    const products = await getProducts(lang);
+    paths.push(
+      ...products.map((product) => ({
+        params: { lang, slug: product.slug },
+        props: { product, related: getRelated(products, product.slug) },
+      })),
+    );
+  }
+  return paths;
+}
+
+const lang = isLocale(Astro.params.lang) ? Astro.params.lang : "en";
+const { product, related } = Astro.props;
+const productUrl = new URL(localePath(lang, `/products/${product.slug}`), Astro.site ?? Astro.url.origin).href;
+const imageToUrl = (image: ProductImage) => (typeof image === "string" ? image : new URL(image.src, Astro.url.origin).href);
+const productImages = product.images.map(imageToUrl);
+
+const copy: Record<Locale, any> = {
+  en: {
+    products: "Products",
+    material: "Key ingredients",
+    dimensions: "Size",
+    finish: "Finish",
+    leadTime: "Lead time",
+    add: "Add to cart",
+    added: "Added to cart →",
+    note: "Free shipping threshold · storefront-ready with Sanity expansion",
+    related: "Pairs well with",
+    viewAll: "View all",
+    imageAlt: (name: string, index: number) => `${name} - view ${index}`,
+    showView: (index: number) => `Show view ${index}`,
+  },
+  zh: {
+    products: "产品",
+    material: "核心成分",
+    dimensions: "规格",
+    finish: "肤感",
+    leadTime: "发货",
+    add: "加入购物车",
+    added: "已加入购物车 →",
+    note: "满额包邮 · 支持电商展示与后续后台接入",
+    related: "可以一起搭配的产品",
+    viewAll: "查看全部",
+    imageAlt: (name: string, index: number) => `${name} — view ${index}`,
+    showView: (index: number) => `Show view ${index}`,
+  },
+};
+
+const t = copy[lang];
+---
+
+<BaseLayout title={`${product.name} — buweihao`} description={product.description.slice(0, 155)} image={product.images[0]} lang={lang}>
+  <main id="main-content">
+    <div class="mx-auto max-w-screen-xl px-6 pt-8">
+      <nav class="flex gap-2 text-xs uppercase tracking-widest text-faded" aria-label="Breadcrumb">
+        <a href={localePath(lang, "/products")} class="hover:text-ink">{t.products}</a>
+        <span aria-hidden="true">/</span>
+        <span class="text-ink" aria-current="page">{product.name}</span>
+      </nav>
+    </div>
+
+    <div class="mx-auto max-w-screen-xl px-6 py-12">
+      <section class="grid grid-cols-1 items-start gap-16 lg:grid-cols-12">
+        <div class="space-y-6 lg:col-span-7" data-product-gallery>
+          <div class="relative aspect-[4/5] overflow-hidden rounded-[min(1vw,12px)] bg-paper">
+            {
+              product.images.map((image, index) => (
+                <div class:list={["absolute inset-0", index !== 0 && "hidden"]} data-gallery-panel={index}>
+                  {
+                    typeof image === "string" ? (
+                      <img src={image} alt={t.imageAlt(product.name, index + 1)} width="1440" height="1800" loading={index === 0 ? "eager" : "lazy"} class="atelier-fade-in h-full w-full object-cover" />
+                    ) : (
+                      <Image src={image} alt={t.imageAlt(product.name, index + 1)} width={1440} height={1800} format="webp" loading={index === 0 ? "eager" : "lazy"} class="atelier-fade-in h-full w-full object-cover" />
+                    )
+                  }
+                </div>
+              ))
+            }
+          </div>
+          <div class="grid grid-cols-3 gap-4">
+            {
+              product.images.map((image, index) => (
+                <button
+                  type="button"
+                  class:list={["aspect-square overflow-hidden rounded-[min(1vw,12px)] bg-paper ring-1 transition-all", index === 0 ? "ring-ink" : "ring-line hover:ring-ink/40"]}
+                  data-gallery-thumb={index}
+                  aria-label={t.showView(index + 1)}
+                  aria-pressed={index === 0 ? "true" : "false"}
+                >
+                  {
+                    typeof image === "string" ? (
+                      <img src={image} alt="" width="360" height="360" loading="lazy" class="h-full w-full object-cover" />
+                    ) : (
+                      <Image src={image} alt="" width={360} height={360} format="webp" loading="lazy" class="h-full w-full object-cover" />
+                    )
+                  }
+                </button>
+              ))
+            }
+          </div>
+        </div>
+
+        <div class="space-y-12 lg:sticky lg:top-24 lg:col-span-5">
+          <div class="space-y-4">
+            <div class="text-xs uppercase tracking-widest text-faded">{product.collection}</div>
+            <h1 class="text-balance font-serif text-4xl leading-tight md:text-5xl">{product.name}</h1>
+            <p class="font-serif text-2xl">{formatPrice(product.price, lang)}</p>
+          </div>
+
+          <div class="space-y-6">
+            <p class="max-w-[44ch] text-pretty leading-relaxed text-faded">{product.description}</p>
+            <dl class="space-y-3">
+              <div class="flex justify-between gap-8 border-b border-line py-2 text-sm">
+                <dt class="text-faded">{t.material}</dt>
+                <dd class="text-right">{product.material}</dd>
+              </div>
+              <div class="flex justify-between gap-8 border-b border-line py-2 text-sm">
+                <dt class="text-faded">{t.dimensions}</dt>
+                <dd class="text-right">{product.dimensions}</dd>
+              </div>
+              <div class="flex justify-between gap-8 border-b border-line py-2 text-sm">
+                <dt class="text-faded">{t.finish}</dt>
+                <dd class="text-right">{product.finish}</dd>
+              </div>
+              <div class="flex justify-between gap-8 border-b border-line py-2 text-sm">
+                <dt class="text-faded">{t.leadTime}</dt>
+                <dd class="text-right">{product.leadTime}</dd>
+              </div>
+            </dl>
+          </div>
+
+          <button type="button" data-add-to-cart={product.slug} class="w-full rounded-full bg-ink py-4 text-sm font-medium text-[var(--color-base)] ring-1 ring-ink transition-all hover:bg-accent hover:ring-accent active:scale-[0.98]">
+            {t.add}
+          </button>
+
+          <p class="text-[11px] uppercase tracking-widest text-faded">{t.note}</p>
+        </div>
+      </section>
+
+      <section class="mt-40 space-y-12 border-t border-line pt-16">
+        <div class="flex items-end justify-between gap-6">
+          <h2 class="font-serif text-3xl md:text-4xl">{t.related}</h2>
+          <a href={localePath(lang, "/products")} class="text-xs uppercase tracking-widest underline underline-offset-4 hover:text-accent">
+            {t.viewAll}
+          </a>
+        </div>
+        <div class="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-3">
+          {related.map((item) => <ProductCard product={item} lang={lang} />)}
+        </div>
+      </section>
+    </div>
+
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      image: productImages,
+      brand: {
+        "@type": "Brand",
+        name: "buweihao",
+      },
+      material: product.material,
+      url: productUrl,
+      offers: {
+        "@type": "Offer",
+        priceCurrency: "CNY",
+        price: product.price,
+        availability: "https://schema.org/PreOrder",
+        url: productUrl,
+      },
+    })}></script>
+
+    <script is:inline define:vars={{ addedLabel: t.added }}>
+      const gallery = document.querySelector("[data-product-gallery]");
+      if (gallery) {
+        const panels = Array.from(gallery.querySelectorAll("[data-gallery-panel]"));
+        const thumbs = Array.from(gallery.querySelectorAll("[data-gallery-thumb]"));
+
+        thumbs.forEach((thumb) => {
+          thumb.addEventListener("click", () => {
+            const active = thumb.dataset.galleryThumb;
+            panels.forEach((panel) => panel.classList.toggle("hidden", panel.dataset.galleryPanel !== active));
+            thumbs.forEach((button) => {
+              const selected = button.dataset.galleryThumb === active;
+              button.classList.toggle("ring-ink", selected);
+              button.classList.toggle("ring-line", !selected);
+              button.setAttribute("aria-pressed", selected ? "true" : "false");
+            });
+          });
+        });
+      }
+
+      const addButton = document.querySelector("[data-add-to-cart]");
+      if (addButton) {
+        const originalText = addButton.textContent;
+        let timer;
+        addButton.addEventListener("click", () => {
+          window.AtelierCart.add(addButton.dataset.addToCart, 1);
+          addButton.textContent = addedLabel;
+          window.clearTimeout(timer);
+          timer = window.setTimeout(() => {
+            addButton.textContent = originalText;
+          }, 1800);
+        });
+      }
+    </script>
+  </main>
+</BaseLayout>

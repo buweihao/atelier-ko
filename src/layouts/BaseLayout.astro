@@ -2,6 +2,7 @@
 import "../styles.css";
 import SiteFooter from "@/components/SiteFooter.astro";
 import SiteHeader from "@/components/SiteHeader.astro";
+import { alternateLinks, defaultLocale, isLocale, localeHtmlLang, localePath, stripLocale, ui } from "@/lib/i18n";
 
 const {
   title = "buweihao — 精简有效的个人护肤品牌",
@@ -10,14 +11,24 @@ const {
   noindex = false,
   includeHeader = true,
   includeFooter = true,
+  lang,
 } = Astro.props;
 
+const pathLocale = Astro.url.pathname.split("/").filter(Boolean)[0];
+const currentLocale = isLocale(lang) ? lang : isLocale(pathLocale) ? pathLocale : defaultLocale;
+const untranslatedPath = stripLocale(Astro.url.pathname);
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
+const alternates = alternateLinks(Astro.url.pathname).map((item) => ({
+  ...item,
+  href: new URL(item.href, Astro.site ?? Astro.url.origin).href,
+}));
+const xDefaultUrl = new URL(localePath(defaultLocale, untranslatedPath), Astro.site ?? Astro.url.origin).href;
 const ogImage = image ? new URL(image.src ?? image, Astro.site ?? Astro.url.origin).href : undefined;
+const copy = ui[currentLocale];
 ---
 
 <!doctype html>
-<html lang="zh-CN">
+<html lang={localeHtmlLang[currentLocale]}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -26,6 +37,8 @@ const ogImage = image ? new URL(image.src ?? image, Astro.site ?? Astro.url.orig
     <meta name="author" content="buweihao" />
     <meta name="theme-color" content="#f8f7f4" />
     <link rel="canonical" href={canonicalUrl.href} />
+    {alternates.map((item) => <link rel="alternate" hreflang={item.hreflang} href={item.href} />)}
+    <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     {noindex && <meta name="robots" content="noindex,nofollow" />}
 
@@ -66,8 +79,9 @@ const ogImage = image ? new URL(image.src ?? image, Astro.site ?? Astro.url.orig
           document.querySelectorAll("[data-cart-count]").forEach((node) => {
             node.textContent = `(${total})`;
           });
+          const labelTemplate = document.body.dataset.cartLabel || "Cart, {count} items";
           document.querySelectorAll("[data-cart-label]").forEach((node) => {
-            node.setAttribute("aria-label", `购物车，${total} 件商品`);
+            node.setAttribute("aria-label", labelTemplate.replace("{count}", String(total)));
           });
         }
 
@@ -108,17 +122,17 @@ const ogImage = image ? new URL(image.src ?? image, Astro.site ?? Astro.url.orig
       })();
     </script>
   </head>
-  <body class="bg-base text-ink">
+  <body class="bg-base text-ink" data-cart-label={copy.cartAria(0).replace("0", "{count}")}>
     <a
       href="#main-content"
       class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:text-[var(--color-base)]"
     >
-      跳到主要内容
+      {copy.skip}
     </a>
-    {includeHeader && <SiteHeader currentPath={Astro.url.pathname} />}
+    {includeHeader && <SiteHeader currentPath={Astro.url.pathname} lang={currentLocale} />}
     <div>
       <slot />
     </div>
-    {includeFooter && <SiteFooter />}
+    {includeFooter && <SiteFooter lang={currentLocale} />}
   </body>
 </html>

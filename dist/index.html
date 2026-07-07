@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>buweihao — 清洁、补水、防晒、抗衰护肤产品</title><meta name="description" content="buweihao 是一个个人护肤电商产品展示站，提供清洁、补水、防晒与抗衰四类日常护肤产品。"><meta name="author" content="buweihao"><meta name="theme-color" content="#f8f7f4"><link rel="canonical" href="https://atelier-ko.weihaobu.cn/"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta property="og:title" content="buweihao — 清洁、补水、防晒、抗衰护肤产品"><meta property="og:description" content="buweihao 是一个个人护肤电商产品展示站，提供清洁、补水、防晒与抗衰四类日常护肤产品。"><meta property="og:site_name" content="buweihao"><meta property="og:type" content="website"><meta property="og:url" content="https://atelier-ko.weihaobu.cn/"><meta property="og:image" content="https://atelier-ko.weihaobu.cn/_astro/buweihao-hero.VkhroEMN.jpg"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="buweihao — 清洁、补水、防晒、抗衰护肤产品"><meta name="twitter:description" content="buweihao 是一个个人护肤电商产品展示站，提供清洁、补水、防晒与抗衰四类日常护肤产品。"><meta name="twitter:image" content="https://atelier-ko.weihaobu.cn/_astro/buweihao-hero.VkhroEMN.jpg"><script>
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>buweihao</title><meta name="description" content="Choose your preferred language for buweihao."><meta name="author" content="buweihao"><meta name="theme-color" content="#f8f7f4"><link rel="canonical" href="https://atelier-ko.weihaobu.cn/"><link rel="alternate" hreflang="en" href="https://atelier-ko.weihaobu.cn/en"><link rel="alternate" hreflang="zh-CN" href="https://atelier-ko.weihaobu.cn/zh"><link rel="alternate" hreflang="x-default" href="https://atelier-ko.weihaobu.cn/en"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="robots" content="noindex,nofollow"><meta property="og:title" content="buweihao"><meta property="og:description" content="Choose your preferred language for buweihao."><meta property="og:site_name" content="buweihao"><meta property="og:type" content="website"><meta property="og:url" content="https://atelier-ko.weihaobu.cn/"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="buweihao"><meta name="twitter:description" content="Choose your preferred language for buweihao."><script>
       (() => {
         const storageKey = "atelier-ko-cart";
 
@@ -24,8 +24,9 @@
           document.querySelectorAll("[data-cart-count]").forEach((node) => {
             node.textContent = `(${total})`;
           });
+          const labelTemplate = document.body.dataset.cartLabel || "Cart, {count} items";
           document.querySelectorAll("[data-cart-label]").forEach((node) => {
-            node.setAttribute("aria-label", `购物车，${total} 件商品`);
+            node.setAttribute("aria-label", labelTemplate.replace("{count}", String(total)));
           });
         }
 
@@ -64,138 +65,26 @@
         window.addEventListener("storage", updateBadges);
         document.addEventListener("atelier-cart-change", updateBadges);
       })();
-    </script><link rel="stylesheet" href="/_astro/BaseLayout.cK8rY8VI.css"></head> <body class="bg-base text-ink"> <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:text-[var(--color-base)]">
-跳到主要内容
-</a> <nav class="sticky top-0 z-50 border-b border-line bg-base/80 backdrop-blur-md" aria-label="Main navigation"> <div class="mx-auto flex h-16 max-w-screen-xl items-center justify-between px-6"> <a href="/" class="font-serif text-xl italic tracking-tight" aria-label="buweihao 首页">
-buweihao
-</a> <div class="hidden items-center gap-8 text-sm md:flex"> <a href="/" class="transition-colors hover:text-accent text-ink" aria-current="page"> 首页 </a><a href="/products" class="transition-colors hover:text-accent text-faded"> 产品 </a><a href="/about" class="transition-colors hover:text-accent text-faded"> 关于 </a><a href="/contact" class="transition-colors hover:text-accent text-faded"> 联系 </a> </div> <div class="flex items-center gap-3"> <a href="/cart" data-cart-label aria-label="购物车，0 件商品" class="relative inline-flex items-center gap-1.5 p-1 text-sm font-medium transition-colors hover:text-accent"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M6 8h12l-1 12H7L6 8Z"></path> <path d="M9 8a3 3 0 0 1 6 0"></path> </svg> <span class="tabular-nums text-faded" data-cart-count>(0)</span> </a> <button type="button" class="inline-flex h-10 w-10 items-center justify-center rounded-full text-ink transition-colors hover:text-accent md:hidden" aria-label="打开菜单" aria-controls="mobile-menu" aria-expanded="false" data-mobile-menu-open> <span class="sr-only">打开菜单</span> <span class="flex w-4 flex-col gap-1.5" aria-hidden="true"> <span class="h-px w-full bg-current"></span> <span class="h-px w-full bg-current"></span> <span class="h-px w-full bg-current"></span> </span> </button> </div> </div> </nav> <div id="mobile-menu" class="fixed inset-0 z-[60] hidden h-dvh overflow-hidden bg-base text-ink md:hidden" role="dialog" aria-modal="true" aria-label="Mobile menu" data-mobile-menu> <div class="flex h-full flex-col px-6 pb-6 pt-5"> <div class="flex h-11 items-center justify-between"> <a href="/" class="font-serif text-xl italic tracking-tight" aria-label="buweihao 首页" data-mobile-menu-link>
-buweihao
-</a> <button type="button" class="inline-flex h-10 w-10 items-center justify-center rounded-full text-ink transition-colors hover:text-accent" aria-label="关闭菜单" data-mobile-menu-close> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"> <path d="M6 6l12 12"></path> <path d="M18 6L6 18"></path> </svg> </button> </div> <div class="flex min-h-0 flex-1 flex-col gap-5 pt-7"> <div class="space-y-2.5"> <a href="/" class="block font-serif text-4xl leading-none transition-colors hover:text-accent text-ink" aria-current="page" data-mobile-menu-link> 首页 </a><a href="/products" class="block font-serif text-4xl leading-none transition-colors hover:text-accent text-faded" data-mobile-menu-link> 产品 </a><a href="/about" class="block font-serif text-4xl leading-none transition-colors hover:text-accent text-faded" data-mobile-menu-link> 关于 </a><a href="/contact" class="block font-serif text-4xl leading-none transition-colors hover:text-accent text-faded" data-mobile-menu-link> 联系 </a> <a href="/cart" data-cart-label aria-label="Cart, 0 items" class="inline-flex items-center gap-2 pt-1 text-sm uppercase tracking-[0.2em] text-faded transition-colors hover:text-ink" data-mobile-menu-link>
-购物车
-<span class="tabular-nums" data-cart-count>(0)</span> </a> </div> <a href="/products/hydration-serum" class="group block border-y border-line py-4" data-mobile-menu-link> <div class="aspect-[16/10] max-h-[32dvh] overflow-hidden rounded-md bg-paper"> <img src="/_astro/buweihao-hydration.C1MTDFaI_2an4Y6.webp" alt="玻尿酸沁润精华 - 轻盈补水，打底服帖" loading="lazy" decoding="async" width="900" height="560" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"> </div> <div class="mt-3 flex items-end justify-between gap-4"> <div class="min-w-0 space-y-1.5"> <p class="text-[10px] uppercase tracking-[0.3em] text-faded">精选产品</p> <p class="font-serif text-3xl leading-none">玻尿酸沁润精华</p> <p class="text-sm leading-relaxed text-faded">轻盈补水，打底服帖</p> </div> <p class="shrink-0 pb-0.5 text-xs uppercase tracking-[0.2em] text-accent"> ¥189 </p> </div> </a> <div class="mt-auto space-y-2 text-sm"> <p class="text-[10px] uppercase tracking-[0.3em] text-faded">联系</p> <a href="mailto:buweihao@qq.com" class="block transition-colors hover:text-accent" data-mobile-menu-link>
-buweihao@qq.com
-</a> </div> </div> </div> </div> <script>
-  (() => {
-    const menu = document.querySelector("[data-mobile-menu]");
-    const openButton = document.querySelector("[data-mobile-menu-open]");
-    const closeButton = document.querySelector("[data-mobile-menu-close]");
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CQKeTt2e.css"></head> <body class="bg-base text-ink" data-cart-label="Cart, {count} items"> <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:text-[var(--color-base)]"> Skip to main content </a>  <div>  <main id="main-content" class="grid min-h-dvh place-items-center px-6 text-center"> <div class="space-y-6"> <p class="font-serif text-4xl italic">buweihao</p> <p class="text-sm text-faded">Choosing your language...</p> <div class="flex justify-center gap-3"> <a href="/en" class="rounded-full border border-line px-5 py-2 text-sm transition-colors hover:text-accent" data-lang-choice="en">English</a> <a href="/zh" class="rounded-full border border-line px-5 py-2 text-sm transition-colors hover:text-accent" data-lang-choice="zh">中文</a> </div> </div> <script>
+      (() => {
+        const storageKey = "atelier-ko-locale";
+        const supported = ["en", "zh"];
 
-    if (!menu || !openButton || !closeButton) return;
+        function savedLocale() {
+          try {
+            const value = window.localStorage.getItem(storageKey);
+            if (supported.includes(value)) return value;
+          } catch {}
+          const match = document.cookie.match(/(?:^|; )atelier-ko-locale=(en|zh)(?:;|$)/);
+          return match?.[1];
+        }
 
-    const focusableSelector = [
-      "a[href]",
-      "button:not([disabled])",
-      "input:not([disabled])",
-      "select:not([disabled])",
-      "textarea:not([disabled])",
-      '[tabindex]:not([tabindex="-1"])',
-    ].join(",");
-    let lastFocusedElement;
+        function browserLocale() {
+          const languages = navigator.languages?.length ? navigator.languages : [navigator.language];
+          return languages.some((language) => /^zh\b/i.test(language || "")) ? "zh" : "en";
+        }
 
-    function getFocusable() {
-      return Array.from(menu.querySelectorAll(focusableSelector)).filter((element) => {
-        return element instanceof HTMLElement && element.offsetParent !== null;
-      });
-    }
-
-    function lockScroll() {
-      document.documentElement.style.overflow = "hidden";
-      document.body.style.overflow = "hidden";
-    }
-
-    function unlockScroll() {
-      document.documentElement.style.overflow = "";
-      document.body.style.overflow = "";
-    }
-
-    function openMenu() {
-      lastFocusedElement = document.activeElement;
-      menu.classList.remove("hidden");
-      openButton.setAttribute("aria-expanded", "true");
-      lockScroll();
-      closeButton.focus({ preventScroll: true });
-    }
-
-    function closeMenu({ restoreFocus = true } = {}) {
-      menu.classList.add("hidden");
-      openButton.setAttribute("aria-expanded", "false");
-      unlockScroll();
-
-      if (restoreFocus && lastFocusedElement instanceof HTMLElement) {
-        lastFocusedElement.focus({ preventScroll: true });
-      }
-    }
-
-    openButton.addEventListener("click", openMenu);
-    closeButton.addEventListener("click", () => closeMenu());
-
-    menu.querySelectorAll("[data-mobile-menu-link]").forEach((link) => {
-      link.addEventListener("click", () => closeMenu({ restoreFocus: false }));
-    });
-
-    document.addEventListener("keydown", (event) => {
-      if (menu.classList.contains("hidden")) return;
-
-      if (event.key === "Escape") {
-        event.preventDefault();
-        closeMenu();
-        return;
-      }
-
-      if (event.key !== "Tab") return;
-
-      const focusable = getFocusable();
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-
-      if (!first || !last) return;
-
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    });
-
-    window.addEventListener("resize", () => {
-      if (window.matchMedia("(min-width: 768px)").matches && !menu.classList.contains("hidden")) {
-        closeMenu({ restoreFocus: false });
-      }
-    });
-  })();
-</script> <div>  <main id="main-content"> <section class="relative overflow-hidden bg-base"> <div class="md:hidden"> <div class="aspect-[4/3] w-full"> <img src="/_astro/buweihao-hero.VkhroEMN_Zx2Qk4.webp" alt="buweihao 极简护肤产品组合" loading="eager" decoding="sync" width="1600" height="1100" class="h-full w-full object-cover object-right"> </div> <div class="space-y-6 px-6 py-12"> <p class="flex items-center gap-3 text-[11px] uppercase tracking-[0.3em] text-faded"> <span class="inline-block h-px w-8 bg-ink/40"></span>
-Clean care for everyday skin
-</p> <h1 class="text-balance font-serif text-4xl leading-[0.95]">
-buweihao
-<br> <span class="italic text-accent">把日常护肤做清楚。</span> </h1> <p class="max-w-[48ch] text-pretty leading-relaxed text-faded">
-从清洁、补水、防晒到抗衰，围绕每天都会用到的护肤步骤，提供轻盈、有效、好坚持的产品组合。
-</p> <div class="flex flex-col items-start gap-4 sm:flex-row sm:items-center"> <a href="/products" class="group inline-flex items-center gap-3 rounded-full bg-ink px-7 py-4 text-[11px] font-medium uppercase tracking-[0.2em] text-[var(--color-base)] transition-colors hover:bg-accent">
-查看产品
-<span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span> </a> <a href="/about" class="text-[11px] uppercase tracking-[0.2em] text-faded transition-colors hover:text-ink">
-了解品牌 →
-</a> </div> </div> </div> <div class="relative hidden h-[88vh] max-h-[920px] min-h-[640px] w-full md:block"> <img src="/_astro/buweihao-hero.VkhroEMN_Xpfki.webp" alt="buweihao 极简护肤产品组合" loading="eager" decoding="sync" width="2048" height="1200" class="absolute inset-0 h-full w-full object-cover object-right"> <div aria-hidden="true" class="absolute inset-0" style="background: linear-gradient(90deg, var(--color-base) 0%, var(--color-base) 30%, color-mix(in oklab, var(--color-base) 62%, transparent) 48%, transparent 78%)"></div> <div class="relative mx-auto flex h-full max-w-screen-xl items-center px-6"> <div class="max-w-[500px] space-y-8"> <p class="flex items-center gap-3 text-[11px] uppercase tracking-[0.3em] text-faded"> <span class="inline-block h-px w-8 bg-ink/40"></span>
-Clean care for everyday skin
-</p> <h1 class="text-balance font-serif text-5xl leading-[0.95] lg:text-7xl">
-buweihao
-<br> <span class="italic text-accent">把日常护肤做清楚。</span> </h1> <p class="max-w-[48ch] text-pretty leading-relaxed text-faded md:text-lg">
-从清洁、补水、防晒到抗衰，围绕每天都会用到的护肤步骤，提供轻盈、有效、好坚持的产品组合。
-</p> <div class="flex items-center gap-6 pt-2"> <a href="/products" class="group inline-flex items-center gap-3 rounded-full bg-ink px-7 py-4 text-[11px] font-medium uppercase tracking-[0.2em] text-[var(--color-base)] transition-colors hover:bg-accent">
-查看产品
-<span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span> </a> <a href="/contact" class="text-[11px] uppercase tracking-[0.2em] text-faded transition-colors hover:text-ink">
-联系我们 →
-</a> </div> </div> </div> </div> </section> <section class="mx-auto max-w-screen-xl px-6 pt-24 md:pt-32"> <div class="mb-12 flex items-end justify-between gap-6 border-t border-line pt-10"> <div> <p class="mb-4 text-[11px] uppercase tracking-[0.3em] text-faded">Product system</p> <h2 class="max-w-[18ch] text-balance font-serif text-3xl md:text-5xl">
-四个步骤，<span class="italic text-accent">覆盖日常护理。</span> </h2> </div> <a href="/products" class="hidden items-center gap-2 whitespace-nowrap text-[11px] uppercase tracking-[0.2em] text-faded transition-colors hover:text-ink md:inline-flex">
-全部产品
-<span aria-hidden="true">→</span> </a> </div> <div class="grid gap-x-8 gap-y-10 md:grid-cols-4"> <a href="/products?category=%E6%B8%85%E6%B4%81" class="space-y-3 border-t border-line pt-5 transition-colors hover:text-accent"> <p class="text-[10px] uppercase tracking-[0.3em] text-faded">清洁</p> <h3 class="font-serif text-2xl">清洁护理</h3> <p class="text-sm leading-relaxed text-faded">温和带走油脂、防晒与日常脏污，保留洗后舒适感。</p> </a><a href="/products?category=%E8%A1%A5%E6%B0%B4" class="space-y-3 border-t border-line pt-5 transition-colors hover:text-accent"> <p class="text-[10px] uppercase tracking-[0.3em] text-faded">补水</p> <h3 class="font-serif text-2xl">补水护理</h3> <p class="text-sm leading-relaxed text-faded">用轻盈水感配方，为干燥和换季状态打好底。</p> </a><a href="/products?category=%E9%98%B2%E6%99%92" class="space-y-3 border-t border-line pt-5 transition-colors hover:text-accent"> <p class="text-[10px] uppercase tracking-[0.3em] text-faded">防晒</p> <h3 class="font-serif text-2xl">防晒护理</h3> <p class="text-sm leading-relaxed text-faded">清爽成膜，适合通勤、出行和每天都要做的防护。</p> </a><a href="/products?category=%E6%8A%97%E8%A1%B0" class="space-y-3 border-t border-line pt-5 transition-colors hover:text-accent"> <p class="text-[10px] uppercase tracking-[0.3em] text-faded">抗衰</p> <h3 class="font-serif text-2xl">抗衰护理</h3> <p class="text-sm leading-relaxed text-faded">围绕屏障、干纹和弹润观感，建立夜间修护节奏。</p> </a> </div> </section> <section class="mx-auto mt-32 max-w-screen-xl px-6 md:mt-40"> <div class="mb-12 flex items-end justify-between gap-6 border-t border-line pt-10"> <div> <p class="mb-4 text-[11px] uppercase tracking-[0.3em] text-faded">Featured products</p> <h2 class="max-w-[20ch] text-balance font-serif text-3xl md:text-5xl">
-适合上架展示的<span class="italic text-accent">核心产品。</span> </h2> </div> </div> <div class="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-4"> <a href="/products/amino-cleanser" class="group block space-y-4" data-product-card> <div class="aspect-[4/5] overflow-hidden rounded-[min(1vw,12px)] bg-paper"> <img src="/_astro/buweihao-cleanser.k7tRbyMT_2rsgr7.webp" alt="氨基酸净透洁面 — 温和起泡，洗后不紧绷" loading="eager" decoding="sync" width="1024" height="1280" class="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.03]"> </div> <div class="flex items-start justify-between gap-4"> <div> <h2 class="text-sm font-medium">氨基酸净透洁面</h2> <p class="text-xs text-faded">温和起泡，洗后不紧绷</p> </div> <span class="text-sm tabular-nums">¥129</span> </div> </a><a href="/products/hydration-serum" class="group block space-y-4" data-product-card> <div class="aspect-[4/5] overflow-hidden rounded-[min(1vw,12px)] bg-paper"> <img src="/_astro/buweihao-hydration.C1MTDFaI_Z1JEPSk.webp" alt="玻尿酸沁润精华 — 轻盈补水，打底服帖" loading="eager" decoding="sync" width="1024" height="1280" class="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.03]"> </div> <div class="flex items-start justify-between gap-4"> <div> <h2 class="text-sm font-medium">玻尿酸沁润精华</h2> <p class="text-xs text-faded">轻盈补水，打底服帖</p> </div> <span class="text-sm tabular-nums">¥189</span> </div> </a><a href="/products/daily-sunscreen" class="group block space-y-4" data-product-card> <div class="aspect-[4/5] overflow-hidden rounded-[min(1vw,12px)] bg-paper"> <img src="/_astro/buweihao-sunscreen.C7PfBsgB_tIfoQ.webp" alt="日常轻透防晒乳 — 清爽成膜，通勤友好" loading="lazy" decoding="async" width="1024" height="1280" class="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.03]"> </div> <div class="flex items-start justify-between gap-4"> <div> <h2 class="text-sm font-medium">日常轻透防晒乳</h2> <p class="text-xs text-faded">清爽成膜，通勤友好</p> </div> <span class="text-sm tabular-nums">¥169</span> </div> </a><a href="/products/renewal-cream" class="group block space-y-4" data-product-card> <div class="aspect-[4/5] overflow-hidden rounded-[min(1vw,12px)] bg-paper"> <img src="/_astro/buweihao-aging.CuuT7GTJ_Z1BGYuH.webp" alt="胜肽焕活面霜 — 夜间滋养，柔润支撑" loading="lazy" decoding="async" width="1024" height="1280" class="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.03]"> </div> <div class="flex items-start justify-between gap-4"> <div> <h2 class="text-sm font-medium">胜肽焕活面霜</h2> <p class="text-xs text-faded">夜间滋养，柔润支撑</p> </div> <span class="text-sm tabular-nums">¥259</span> </div> </a> </div> </section> <section class="mx-auto my-32 max-w-screen-xl px-6 md:my-40"> <div class="grid items-end gap-10 border-y border-line py-12 md:grid-cols-12"> <div class="md:col-span-7"> <p class="mb-5 text-[11px] uppercase tracking-[0.3em] text-faded">Sanity ready</p> <h2 class="max-w-[18ch] text-balance font-serif text-3xl md:text-5xl">
-内容可迁移到 Sanity，<span class="italic text-accent">前台保持静态快速。</span> </h2> </div> <div class="space-y-5 text-sm leading-relaxed text-faded md:col-span-5"> <p>
-当前产品以 Astro 内容集合驱动，已补充 Sanity Studio 配置和产品 schema，后续可以接入 Sanity dataset 管理产品、分类与图片。
-</p> <a href="/contact" class="inline-flex text-[11px] uppercase tracking-[0.2em] text-ink transition-colors hover:text-accent">
-合作咨询 →
-</a> </div> </div> </section> <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"buweihao","url":"https://atelier-ko.weihaobu.cn/","email":"buweihao@qq.com","sameAs":["https://baidu.com"]}</script> </main>  </div> <footer id="studio" class="mt-32 border-t border-line py-24"> <div class="mx-auto grid max-w-screen-xl grid-cols-1 gap-12 px-6 md:grid-cols-3"> <div class="space-y-4"> <div class="font-serif text-lg italic tracking-tight">buweihao</div> <p class="max-w-[30ch] text-sm leading-relaxed text-faded">
-专注清洁、补水、防晒与抗衰的个人护肤品牌，给日常护理留下更清晰的选择。
-</p> </div> <div class="space-y-4"> <h2 class="text-xs font-medium uppercase tracking-widest">导航</h2> <ul class="space-y-2 text-sm"> <li><a href="/products" class="text-faded transition-colors hover:text-ink">产品</a></li> <li><a href="/about" class="text-faded transition-colors hover:text-ink">关于</a></li> <li><a href="/contact" class="text-faded transition-colors hover:text-ink">联系</a></li> </ul> </div> <div class="space-y-4"> <h2 class="text-xs font-medium uppercase tracking-widest">联系</h2> <ul class="space-y-2 text-sm"> <li><a href="mailto:buweihao@qq.com" class="text-faded transition-colors hover:text-ink">buweihao@qq.com</a></li> <li><a href="https://baidu.com" class="text-faded transition-colors hover:text-ink">baidu.com</a></li> </ul> </div> </div> <div class="mx-auto mt-16 max-w-screen-xl px-6 text-[10px] uppercase tracking-[0.2em] text-faded">
-© 2026 buweihao — Daily skincare essentials.
-</div> </footer> </body></html>
+        const target = savedLocale() || browserLocale();
+        window.location.replace(`/${target}`);
+      })();
+    </script> </main>  </div>  </body></html>

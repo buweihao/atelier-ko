@@ -1,5 +1,6 @@
 import { createClient } from "@sanity/client";
 import { createImageUrlBuilder } from "@sanity/image-url";
+import type { Locale } from "@/lib/i18n";
 
 const env = import.meta.env;
 
@@ -23,16 +24,25 @@ let productsRequest: Promise<SanityProductDocument[]> | undefined;
 
 export type SanityProductDocument = {
   name?: string | null;
+  nameI18n?: Partial<Record<Locale, string | null>> | null;
   slug?: string | null;
   collection?: string | null;
+  collectionI18n?: Partial<Record<Locale, string | null>> | null;
   category?: string | null;
+  categoryI18n?: Partial<Record<Locale, string | null>> | null;
   material?: string | null;
+  materialI18n?: Partial<Record<Locale, string | null>> | null;
   price?: number | null;
   shortDescription?: string | null;
+  shortDescriptionI18n?: Partial<Record<Locale, string | null>> | null;
   description?: string | null;
+  descriptionI18n?: Partial<Record<Locale, string | null>> | null;
   dimensions?: string | null;
+  dimensionsI18n?: Partial<Record<Locale, string | null>> | null;
   finish?: string | null;
+  finishI18n?: Partial<Record<Locale, string | null>> | null;
   leadTime?: string | null;
+  leadTimeI18n?: Partial<Record<Locale, string | null>> | null;
   order?: number | null;
   images?: Array<{
     asset?: unknown;
@@ -48,16 +58,25 @@ export async function fetchSanityProducts(): Promise<SanityProductDocument[]> {
     .fetch<SanityProductDocument[]>(`
       *[_type == "atelierProduct" && defined(slug.current)] | order(coalesce(order, 999) asc, name asc) {
         name,
+        nameI18n,
         "slug": slug.current,
         collection,
+        collectionI18n,
         category,
+        categoryI18n,
         material,
+        materialI18n,
         price,
         shortDescription,
+        shortDescriptionI18n,
         description,
+        descriptionI18n,
         dimensions,
+        dimensionsI18n,
         finish,
+        finishI18n,
         leadTime,
+        leadTimeI18n,
         order,
         "images": coalesce(images, [])[] {
           asset,

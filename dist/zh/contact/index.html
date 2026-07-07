@@ -1,0 +1,176 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>联系 — buweihao</title><meta name="description" content="联系 buweihao，邮箱 buweihao@qq.com，社交链接 baidu.com。"><meta name="author" content="buweihao"><meta name="theme-color" content="#f8f7f4"><link rel="canonical" href="https://atelier-ko.weihaobu.cn/zh/contact/"><link rel="alternate" hreflang="en" href="https://atelier-ko.weihaobu.cn/en/contact"><link rel="alternate" hreflang="zh-CN" href="https://atelier-ko.weihaobu.cn/zh/contact"><link rel="alternate" hreflang="x-default" href="https://atelier-ko.weihaobu.cn/en/contact"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta property="og:title" content="联系 — buweihao"><meta property="og:description" content="联系 buweihao，邮箱 buweihao@qq.com，社交链接 baidu.com。"><meta property="og:site_name" content="buweihao"><meta property="og:type" content="website"><meta property="og:url" content="https://atelier-ko.weihaobu.cn/zh/contact/"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="联系 — buweihao"><meta name="twitter:description" content="联系 buweihao，邮箱 buweihao@qq.com，社交链接 baidu.com。"><script>
+      (() => {
+        const storageKey = "atelier-ko-cart";
+
+        function readCart() {
+          try {
+            return JSON.parse(window.localStorage.getItem(storageKey) || "[]");
+          } catch {
+            return [];
+          }
+        }
+
+        function writeCart(items) {
+          window.localStorage.setItem(storageKey, JSON.stringify(items));
+          document.dispatchEvent(new CustomEvent("atelier-cart-change", { detail: items }));
+        }
+
+        function count(items = readCart()) {
+          return items.reduce((total, item) => total + Number(item.quantity || 0), 0);
+        }
+
+        function updateBadges() {
+          const total = count();
+          document.querySelectorAll("[data-cart-count]").forEach((node) => {
+            node.textContent = `(${total})`;
+          });
+          const labelTemplate = document.body.dataset.cartLabel || "Cart, {count} items";
+          document.querySelectorAll("[data-cart-label]").forEach((node) => {
+            node.setAttribute("aria-label", labelTemplate.replace("{count}", String(total)));
+          });
+        }
+
+        window.AtelierCart = {
+          read: readCart,
+          write: writeCart,
+          count,
+          add(slug, quantity = 1) {
+            const items = readCart();
+            const existing = items.find((item) => item.slug === slug);
+            if (existing) {
+              existing.quantity += quantity;
+              writeCart(items);
+              return;
+            }
+            writeCart([...items, { slug, quantity }]);
+          },
+          remove(slug) {
+            writeCart(readCart().filter((item) => item.slug !== slug));
+          },
+          setQuantity(slug, quantity) {
+            if (quantity <= 0) {
+              this.remove(slug);
+              return;
+            }
+            writeCart(readCart().map((item) => (item.slug === slug ? { ...item, quantity } : item)));
+          },
+          updateBadges,
+        };
+
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", updateBadges);
+        } else {
+          updateBadges();
+        }
+        window.addEventListener("storage", updateBadges);
+        document.addEventListener("atelier-cart-change", updateBadges);
+      })();
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CQKeTt2e.css"></head> <body class="bg-base text-ink" data-cart-label="购物车，{count} 件商品"> <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:text-[var(--color-base)]"> 跳到主要内容 </a> <nav class="sticky top-0 z-50 border-b border-line bg-base/80 backdrop-blur-md" aria-label="Main navigation"> <div class="mx-auto flex h-16 max-w-screen-xl items-center justify-between px-6"> <a href="/zh" class="font-serif text-xl italic tracking-tight" aria-label="buweihao">
+buweihao
+</a> <div class="hidden items-center gap-8 text-sm md:flex"> <a href="/zh" class="transition-colors hover:text-accent text-faded"> 首页 </a><a href="/zh/products" class="transition-colors hover:text-accent text-faded"> 产品 </a><a href="/zh/about" class="transition-colors hover:text-accent text-faded"> 关于 </a><a href="/zh/contact" class="transition-colors hover:text-accent text-ink" aria-current="page"> 联系 </a> </div> <div class="flex items-center gap-3"> <div class="hidden items-center rounded-full border border-line p-0.5 text-[11px] font-medium md:flex" aria-label="Language"> <a href="/en/contact" class="rounded-full px-2.5 py-1 transition-colors hover:text-accent text-faded" data-lang-choice="en"> English </a><a href="/zh/contact" class="rounded-full px-2.5 py-1 transition-colors hover:text-accent bg-ink text-[var(--color-base)]" aria-current="page" data-lang-choice="zh"> 中文 </a> </div> <a href="/zh/cart" data-cart-label aria-label="购物车，0 件商品" class="relative inline-flex items-center gap-1.5 p-1 text-sm font-medium transition-colors hover:text-accent"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M6 8h12l-1 12H7L6 8Z"></path> <path d="M9 8a3 3 0 0 1 6 0"></path> </svg> <span class="tabular-nums text-faded" data-cart-count>(0)</span> </a> <button type="button" class="inline-flex h-10 w-10 items-center justify-center rounded-full text-ink transition-colors hover:text-accent md:hidden" aria-label="打开菜单" aria-controls="mobile-menu" aria-expanded="false" data-mobile-menu-open> <span class="sr-only">打开菜单</span> <span class="flex w-4 flex-col gap-1.5" aria-hidden="true"> <span class="h-px w-full bg-current"></span> <span class="h-px w-full bg-current"></span> <span class="h-px w-full bg-current"></span> </span> </button> </div> </div> </nav> <div id="mobile-menu" class="fixed inset-0 z-[60] hidden h-dvh overflow-hidden bg-base text-ink md:hidden" role="dialog" aria-modal="true" aria-label="Mobile menu" data-mobile-menu> <div class="flex h-full flex-col px-6 pb-6 pt-5"> <div class="flex h-11 items-center justify-between"> <a href="/zh" class="font-serif text-xl italic tracking-tight" aria-label="buweihao" data-mobile-menu-link>
+buweihao
+</a> <button type="button" class="inline-flex h-10 w-10 items-center justify-center rounded-full text-ink transition-colors hover:text-accent" aria-label="关闭菜单" data-mobile-menu-close> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"> <path d="M6 6l12 12"></path> <path d="M18 6L6 18"></path> </svg> </button> </div> <div class="flex min-h-0 flex-1 flex-col gap-5 pt-7"> <div class="space-y-2.5"> <a href="/zh" class="block font-serif text-4xl leading-none transition-colors hover:text-accent text-faded" data-mobile-menu-link> 首页 </a><a href="/zh/products" class="block font-serif text-4xl leading-none transition-colors hover:text-accent text-faded" data-mobile-menu-link> 产品 </a><a href="/zh/about" class="block font-serif text-4xl leading-none transition-colors hover:text-accent text-faded" data-mobile-menu-link> 关于 </a><a href="/zh/contact" class="block font-serif text-4xl leading-none transition-colors hover:text-accent text-ink" aria-current="page" data-mobile-menu-link> 联系 </a> <a href="/zh/cart" data-cart-label aria-label="购物车，0 件商品" class="inline-flex items-center gap-2 pt-1 text-sm uppercase tracking-[0.2em] text-faded transition-colors hover:text-ink" data-mobile-menu-link> 购物车 <span class="tabular-nums" data-cart-count>(0)</span> </a> <div class="flex flex-wrap gap-2 pt-2"> <a href="/en/contact" class="rounded-full border border-line px-3 py-1.5 text-xs transition-colors hover:text-accent text-faded" data-mobile-menu-link data-lang-choice="en"> English </a><a href="/zh/contact" class="rounded-full border border-line px-3 py-1.5 text-xs transition-colors hover:text-accent bg-ink text-[var(--color-base)]" data-mobile-menu-link data-lang-choice="zh"> 中文 </a> </div> </div> <a href="/zh/products/product1" class="group block border-y border-line py-4" data-mobile-menu-link> <div class="aspect-[16/10] max-h-[32dvh] overflow-hidden rounded-md bg-paper"> <img src="https://cdn.sanity.io/images/nlg7146k/atelier-ko-production/ac344a9a42f7e27d938497123d8681bfceb75ec1-2880x1800.png?rect=720,0,1440,1800&amp;w=1400&amp;h=1750&amp;fit=crop&amp;auto=format" alt="product1 - product1 描述" width="900" height="560" loading="lazy" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"> </div> <div class="mt-3 flex items-end justify-between gap-4"> <div class="min-w-0 space-y-1.5"> <p class="text-[10px] uppercase tracking-[0.3em] text-faded">精选产品</p> <p class="font-serif text-3xl leading-none">product1</p> <p class="text-sm leading-relaxed text-faded">product1 描述</p> </div> <p class="shrink-0 pb-0.5 text-xs uppercase tracking-[0.2em] text-accent"> ¥100 </p> </div> </a> <div class="mt-auto space-y-2 text-sm"> <p class="text-[10px] uppercase tracking-[0.3em] text-faded">联系</p> <a href="mailto:buweihao@qq.com" class="block transition-colors hover:text-accent" data-mobile-menu-link>
+buweihao@qq.com
+</a> </div> </div> </div> </div> <script>
+  (() => {
+    const menu = document.querySelector("[data-mobile-menu]");
+    const openButton = document.querySelector("[data-mobile-menu-open]");
+    const closeButton = document.querySelector("[data-mobile-menu-close]");
+
+    document.querySelectorAll("[data-lang-choice]").forEach((link) => {
+      link.addEventListener("click", () => {
+        try {
+          window.localStorage.setItem("atelier-ko-locale", link.dataset.langChoice);
+          document.cookie = `atelier-ko-locale=${link.dataset.langChoice}; path=/; max-age=31536000; SameSite=Lax`;
+        } catch {}
+      });
+    });
+
+    if (!menu || !openButton || !closeButton) return;
+
+    const focusableSelector = [
+      "a[href]",
+      "button:not([disabled])",
+      "input:not([disabled])",
+      "select:not([disabled])",
+      "textarea:not([disabled])",
+      '[tabindex]:not([tabindex="-1"])',
+    ].join(",");
+    let lastFocusedElement;
+
+    function getFocusable() {
+      return Array.from(menu.querySelectorAll(focusableSelector)).filter((element) => {
+        return element instanceof HTMLElement && element.offsetParent !== null;
+      });
+    }
+
+    function lockScroll() {
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+    }
+
+    function unlockScroll() {
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    }
+
+    function openMenu() {
+      lastFocusedElement = document.activeElement;
+      menu.classList.remove("hidden");
+      openButton.setAttribute("aria-expanded", "true");
+      lockScroll();
+      closeButton.focus({ preventScroll: true });
+    }
+
+    function closeMenu({ restoreFocus = true } = {}) {
+      menu.classList.add("hidden");
+      openButton.setAttribute("aria-expanded", "false");
+      unlockScroll();
+
+      if (restoreFocus && lastFocusedElement instanceof HTMLElement) {
+        lastFocusedElement.focus({ preventScroll: true });
+      }
+    }
+
+    openButton.addEventListener("click", openMenu);
+    closeButton.addEventListener("click", () => closeMenu());
+
+    menu.querySelectorAll("[data-mobile-menu-link]").forEach((link) => {
+      link.addEventListener("click", () => closeMenu({ restoreFocus: false }));
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (menu.classList.contains("hidden")) return;
+
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeMenu();
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+
+      const focusable = getFocusable();
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (!first || !last) return;
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.matchMedia("(min-width: 768px)").matches && !menu.classList.contains("hidden")) {
+        closeMenu({ restoreFocus: false });
+      }
+    });
+  })();
+</script> <div>  <main id="main-content"> <section class="mx-auto max-w-screen-xl px-6 pb-20 pt-20 md:pb-28 md:pt-28"> <p class="mb-6 flex items-center gap-3 text-[11px] uppercase tracking-[0.3em] text-faded"> <span class="inline-block h-px w-8 bg-ink/40"></span> Contact </p> <h1 class="max-w-[18ch] text-balance font-serif text-5xl leading-[0.95] md:text-7xl">有合作、上架或后台需求，可以直接联系。</h1> <p class="mt-8 max-w-[58ch] text-lg leading-relaxed text-faded">当前站点已按电商产品展示结构搭建，并预留 Sanity 后台配置。你可以通过邮箱或社交链接继续完善产品、内容和发布流程。</p> </section> <section class="mx-auto max-w-screen-xl px-6 pb-32"> <div class="grid gap-8 border-y border-line py-12 md:grid-cols-3"> <div class="space-y-3"> <h2 class="text-xs uppercase tracking-[0.25em] text-faded">邮箱</h2> <a href="mailto:buweihao@qq.com" class="font-serif text-3xl transition-colors hover:text-accent">buweihao@qq.com</a> </div> <div class="space-y-3"> <h2 class="text-xs uppercase tracking-[0.25em] text-faded">社交链接</h2> <a href="https://baidu.com" class="font-serif text-3xl transition-colors hover:text-accent">baidu.com</a> </div> <div class="space-y-3"> <h2 class="text-xs uppercase tracking-[0.25em] text-faded">生产域名</h2> <a href="https://atelier-ko.weihaobu.cn" class="font-serif text-3xl transition-colors hover:text-accent">atelier-ko.weihaobu.cn</a> </div> </div> <form class="mt-16 grid gap-5 md:grid-cols-2" method="post" action="mailto:buweihao@qq.com"> <label class="block"> <span class="text-[11px] uppercase tracking-widest text-faded">姓名</span> <input name="name" required class="mt-2 w-full border-b border-line bg-transparent py-3 text-sm transition-colors focus:border-ink focus:outline-none"> </label> <label class="block"> <span class="text-[11px] uppercase tracking-widest text-faded">邮箱</span> <input name="email" type="email" required class="mt-2 w-full border-b border-line bg-transparent py-3 text-sm transition-colors focus:border-ink focus:outline-none"> </label> <label class="block md:col-span-2"> <span class="text-[11px] uppercase tracking-widest text-faded">留言</span> <textarea name="message" required rows="5" class="mt-2 w-full resize-y border-b border-line bg-transparent py-3 text-sm transition-colors focus:border-ink focus:outline-none"></textarea> </label> <div class="md:col-span-2"> <button type="submit" class="inline-flex items-center justify-center gap-3 rounded-full bg-ink px-7 py-4 text-[11px] font-medium uppercase tracking-[0.2em] text-[var(--color-base)] transition-colors hover:bg-accent"> 发送邮件 </button> </div> </form> </section> </main>  </div> <footer id="studio" class="mt-32 border-t border-line py-24"> <div class="mx-auto grid max-w-screen-xl grid-cols-1 gap-12 px-6 md:grid-cols-3"> <div class="space-y-4"> <div class="font-serif text-lg italic tracking-tight">buweihao</div> <p class="max-w-[30ch] text-sm leading-relaxed text-faded"> 专注清洁、补水、防晒与抗衰的个人护肤品牌，给日常护理留下更清晰的选择。 </p> </div> <div class="space-y-4"> <h2 class="text-xs font-medium uppercase tracking-widest">导航</h2> <ul class="space-y-2 text-sm"> <li> <a href="/zh/products" class="text-faded transition-colors hover:text-ink"> 产品 </a> </li><li> <a href="/zh/about" class="text-faded transition-colors hover:text-ink"> 关于 </a> </li><li> <a href="/zh/contact" class="text-faded transition-colors hover:text-ink"> 联系 </a> </li> </ul> </div> <div class="space-y-4"> <h2 class="text-xs font-medium uppercase tracking-widest">联系</h2> <ul class="space-y-2 text-sm"> <li><a href="mailto:buweihao@qq.com" class="text-faded transition-colors hover:text-ink">buweihao@qq.com</a></li> <li><a href="https://baidu.com" class="text-faded transition-colors hover:text-ink">baidu.com</a></li> </ul> </div> </div> <div class="mx-auto mt-16 max-w-screen-xl px-6 text-[10px] uppercase tracking-[0.2em] text-faded">
+© 2026 buweihao — Daily skincare essentials.
+</div> </footer> </body></html>

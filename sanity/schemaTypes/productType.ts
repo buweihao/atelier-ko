@@ -1,5 +1,27 @@
 import { defineField, defineType } from "sanity";
 
+const localizedString = (name: string, title: string) =>
+  defineField({
+    name,
+    title,
+    type: "object",
+    fields: [
+      defineField({ name: "en", title: "English", type: "string" }),
+      defineField({ name: "zh", title: "中文", type: "string" }),
+    ],
+  });
+
+const localizedText = (name: string, title: string) =>
+  defineField({
+    name,
+    title,
+    type: "object",
+    fields: [
+      defineField({ name: "en", title: "English", type: "text", rows: 4 }),
+      defineField({ name: "zh", title: "中文", type: "text", rows: 4 }),
+    ],
+  });
+
 export const productType = defineType({
   name: "atelierProduct",
   title: "产品",
@@ -11,6 +33,7 @@ export const productType = defineType({
       type: "string",
       validation: (rule) => rule.required(),
     }),
+    localizedString("nameI18n", "产品名称（多语言）"),
     defineField({
       name: "slug",
       title: "URL Slug",
@@ -28,17 +51,20 @@ export const productType = defineType({
       },
       validation: (rule) => rule.required(),
     }),
+    localizedString("categoryI18n", "分类（多语言）"),
     defineField({
       name: "collection",
       title: "系列",
       type: "string",
     }),
+    localizedString("collectionI18n", "系列（多语言）"),
     defineField({
       name: "shortDescription",
       title: "短描述",
       type: "string",
       validation: (rule) => rule.required().max(80),
     }),
+    localizedString("shortDescriptionI18n", "短描述（多语言）"),
     defineField({
       name: "description",
       title: "详情描述",
@@ -46,6 +72,7 @@ export const productType = defineType({
       rows: 4,
       validation: (rule) => rule.required(),
     }),
+    localizedText("descriptionI18n", "详情描述（多语言）"),
     defineField({
       name: "price",
       title: "价格",
@@ -57,22 +84,26 @@ export const productType = defineType({
       title: "核心成分",
       type: "string",
     }),
+    localizedString("materialI18n", "核心成分（多语言）"),
     defineField({
       name: "dimensions",
       title: "规格",
       type: "string",
     }),
+    localizedString("dimensionsI18n", "规格（多语言）"),
     defineField({
       name: "finish",
       title: "肤感",
       type: "string",
     }),
+    localizedString("finishI18n", "肤感（多语言）"),
     defineField({
       name: "leadTime",
       title: "发货",
       type: "string",
       initialValue: "现货",
     }),
+    localizedString("leadTimeI18n", "发货（多语言）"),
     defineField({
       name: "images",
       title: "产品图片",

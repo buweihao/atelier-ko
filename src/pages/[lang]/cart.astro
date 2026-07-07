@@ -1,0 +1,191 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { formatPrice, getProducts, productForJson } from "@/data/products.js";
+import { isLocale, locales, localePath, type Locale } from "@/lib/i18n";
+
+export function getStaticPaths() {
+  return locales.map((lang) => ({ params: { lang } }));
+}
+
+const lang = isLocale(Astro.params.lang) ? Astro.params.lang : "en";
+const products = await getProducts(lang);
+const cartProducts = products.map(productForJson);
+const copy: Record<Locale, any> = {
+  en: {
+    title: "Cart — buweihao",
+    description: "Review selected buweihao skincare products.",
+    eyebrow: "Cart",
+    emptyTitle: "Your cart is empty.",
+    filledTitle: "Review your products.",
+    emptyText: "No products have been added yet. Start with cleansing, hydration, sunscreen, or renewal.",
+    browse: "Browse products",
+    summary: "Summary",
+    subtotal: "Subtotal",
+    shipping: "Shipping",
+    total: "Total",
+    primary: "Continue inquiry",
+    note: "This is a storefront cart preview. Payment is not connected yet; the next practical step is an inquiry workflow.",
+    remove: "Remove",
+    lead: "Lead time",
+  },
+  zh: {
+    title: "购物车 — buweihao",
+    description: "查看你已选择的 buweihao 护肤产品。",
+    eyebrow: "购物车",
+    emptyTitle: "暂时为空。",
+    filledTitle: "确认你的产品。",
+    emptyText: "你还没有添加产品。可以先从清洁、补水、防晒、抗衰四类产品开始浏览。",
+    browse: "浏览产品",
+    summary: "订单摘要",
+    subtotal: "商品小计",
+    shipping: "配送",
+    total: "合计",
+    primary: "继续询单",
+    note: "这是电商站展示用购物车预览，支付尚未接入。下一步更适合接询单流程。",
+    remove: "移除",
+    lead: "发货",
+  },
+};
+const t = copy[lang];
+---
+
+<BaseLayout title={t.title} description={t.description} noindex={true} lang={lang}>
+  <main id="main-content" class="mx-auto max-w-screen-xl px-6 py-12">
+    <header class="mb-12 flex items-end justify-between border-b border-line pb-8">
+      <div class="space-y-3">
+        <p class="text-xs uppercase tracking-[0.25em] text-faded">{t.eyebrow}</p>
+        <h1 class="font-serif text-5xl leading-none md:text-6xl" data-cart-title>{t.emptyTitle}</h1>
+      </div>
+    </header>
+
+    <div class="py-32 text-center" data-cart-empty>
+      <div class="space-y-6">
+        <p class="mx-auto max-w-md text-faded">{t.emptyText}</p>
+        <a href={localePath(lang, "/products")} class="inline-block rounded-full bg-ink px-6 py-3 text-xs uppercase tracking-widest text-[var(--color-base)] transition-colors hover:bg-accent">
+          {t.browse}
+        </a>
+      </div>
+    </div>
+
+    <div class="hidden grid grid-cols-1 items-start gap-16 lg:grid-cols-12" data-cart-filled>
+      <section class="space-y-2 lg:col-span-7" aria-live="polite">
+        <ul class="divide-y divide-line border-y border-line" data-cart-list></ul>
+      </section>
+
+      <aside class="space-y-8 rounded-[min(1vw,12px)] bg-paper p-8 lg:sticky lg:top-24 lg:col-span-5">
+        <h2 class="text-xs uppercase tracking-[0.25em] text-faded">{t.summary}</h2>
+        <div class="space-y-3">
+          <div class="flex justify-between text-sm">
+            <span class="text-faded">{t.subtotal}</span>
+            <span class="tabular-nums" data-cart-subtotal>{formatPrice(0, lang)}</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-faded">{t.shipping}</span>
+            <span class="tabular-nums" data-cart-shipping>{formatPrice(0, lang)}</span>
+          </div>
+          <div class="flex items-baseline justify-between border-t border-line pt-3">
+            <span class="text-sm">{t.total}</span>
+            <span class="font-serif text-3xl tabular-nums" data-cart-total>{formatPrice(0, lang)}</span>
+          </div>
+        </div>
+        <a href={localePath(lang, "/contact")} class="block w-full rounded-full bg-ink py-4 text-center text-sm font-medium text-[var(--color-base)] transition-colors hover:bg-accent">
+          {t.primary}
+        </a>
+        <p class="border-t border-line pt-6 text-[11px] leading-relaxed text-faded">{t.note}</p>
+      </aside>
+    </div>
+
+    {
+      products.map((product) => (
+        <template data-product-template={product.slug}>
+          <li class="flex gap-6 py-8" data-cart-row={product.slug}>
+            <a href={localePath(lang, `/products/${product.slug}`)} class="block size-28 shrink-0 overflow-hidden rounded-[min(1vw,12px)] bg-paper md:size-32">
+              {
+                typeof product.images[0] === "string" ? (
+                  <img src={product.images[0]} alt={product.name} width="320" height="320" loading="eager" class="h-full w-full object-cover" />
+                ) : (
+                  <Image src={product.images[0]} alt={product.name} width={320} height={320} format="webp" loading="eager" class="h-full w-full object-cover" />
+                )
+              }
+            </a>
+            <div class="flex min-w-0 flex-1 flex-col justify-between">
+              <div class="flex justify-between gap-4">
+                <div class="min-w-0 space-y-1">
+                  <a href={localePath(lang, `/products/${product.slug}`)} class="block font-serif text-2xl transition-colors hover:text-accent">{product.name}</a>
+                  <p class="text-xs text-faded">{product.material} · {product.finish}</p>
+                  <p class="text-[11px] uppercase tracking-widest text-faded">{t.lead} {product.leadTime}</p>
+                </div>
+                <span class="whitespace-nowrap text-sm tabular-nums" data-row-line-price>{formatPrice(product.price, lang)}</span>
+              </div>
+              <div class="flex items-center justify-between pt-4">
+                <div class="inline-flex items-center overflow-hidden rounded-full border border-line">
+                  <button type="button" class="grid size-8 place-items-center text-sm transition-colors hover:bg-paper" data-cart-action="decrease" aria-label="-">-</button>
+                  <span class="w-8 text-center text-sm tabular-nums" data-row-quantity>1</span>
+                  <button type="button" class="grid size-8 place-items-center text-sm transition-colors hover:bg-paper" data-cart-action="increase" aria-label="+">+</button>
+                </div>
+                <button type="button" class="text-[11px] uppercase tracking-widest text-faded underline underline-offset-4 hover:text-ink" data-cart-action="remove">{t.remove}</button>
+              </div>
+            </div>
+          </li>
+        </template>
+      ))
+    }
+  </main>
+
+  <script is:inline type="application/json" id="cart-products" set:html={JSON.stringify(cartProducts)}></script>
+
+  <script is:inline define:vars={{ filledTitle: t.filledTitle, emptyTitle: t.emptyTitle, locale: lang }}>
+    const productList = JSON.parse(document.getElementById("cart-products").textContent);
+    const productsBySlug = new Map(productList.map((product) => [product.slug, product]));
+    const formatPrice = (value) =>
+      new Intl.NumberFormat(locale === "zh" ? "zh-CN" : "en-US", {
+        style: "currency",
+        currency: "CNY",
+        maximumFractionDigits: 0,
+      }).format(value);
+
+    const title = document.querySelector("[data-cart-title]");
+    const empty = document.querySelector("[data-cart-empty]");
+    const filled = document.querySelector("[data-cart-filled]");
+    const list = document.querySelector("[data-cart-list]");
+    const subtotalNode = document.querySelector("[data-cart-subtotal]");
+    const shippingNode = document.querySelector("[data-cart-shipping]");
+    const totalNode = document.querySelector("[data-cart-total]");
+
+    function rows() {
+      return window.AtelierCart.read()
+        .map((item) => ({ item, product: productsBySlug.get(item.slug) }))
+        .filter((row) => row.product);
+    }
+
+    function render() {
+      const selected = rows();
+      const subtotal = selected.reduce((total, row) => total + row.product.price * row.item.quantity, 0);
+      const shipping = selected.length > 0 ? 120 : 0;
+      const total = subtotal + shipping;
+
+      title.textContent = selected.length === 0 ? emptyTitle : filledTitle;
+      empty.classList.toggle("hidden", selected.length !== 0);
+      filled.classList.toggle("hidden", selected.length === 0);
+      subtotalNode.textContent = formatPrice(subtotal);
+      shippingNode.textContent = formatPrice(shipping);
+      totalNode.textContent = formatPrice(total);
+
+      list.replaceChildren();
+      selected.forEach(({ item, product }) => {
+        const template = document.querySelector(`template[data-product-template="${item.slug}"]`);
+        const row = template.content.firstElementChild.cloneNode(true);
+        row.querySelector("[data-row-quantity]").textContent = String(item.quantity);
+        row.querySelector("[data-row-line-price]").textContent = formatPrice(product.price * item.quantity);
+        row.querySelector('[data-cart-action="decrease"]').addEventListener("click", () => window.AtelierCart.setQuantity(item.slug, item.quantity - 1));
+        row.querySelector('[data-cart-action="increase"]').addEventListener("click", () => window.AtelierCart.setQuantity(item.slug, item.quantity + 1));
+        row.querySelector('[data-cart-action="remove"]').addEventListener("click", () => window.AtelierCart.remove(item.slug));
+        list.appendChild(row);
+      });
+    }
+
+    document.addEventListener("atelier-cart-change", render);
+    render();
+  </script>
+</BaseLayout>

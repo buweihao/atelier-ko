@@ -1,0 +1,203 @@
+---
+import ProductCard from "@/components/ProductCard.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getProductFilters, getProducts } from "@/data/products.js";
+import { isLocale, locales, type Locale } from "@/lib/i18n";
+
+export function getStaticPaths() {
+  return locales.map((lang) => ({ params: { lang } }));
+}
+
+const lang = isLocale(Astro.params.lang) ? Astro.params.lang : "en";
+const products = await getProducts(lang);
+const { categories: allCategories, materials: allMaterials } = getProductFilters(products);
+
+const copy: Record<Locale, any> = {
+  en: {
+    title: "Products — buweihao",
+    description: "Browse buweihao skincare products by category and function.",
+    eyebrow: "Products",
+    headline: "Four skincare categories for everyday routines.",
+    intro: "From cleansing to hydration, sunscreen, and night renewal, buweihao gives shoppers a clear product structure for daily care.",
+    filterLabel: "Product filters",
+    countLabel: "products",
+    allCategories: "All categories",
+    allMaterials: "All functions",
+    sort: "Sort",
+    featured: "Featured",
+    priceAsc: "Price low to high",
+    priceDesc: "Price high to low",
+    empty: "No matching products.",
+  },
+  zh: {
+    title: "产品 — buweihao",
+    description: "浏览 buweihao 清洁、补水、防晒、抗衰护肤产品，按分类和功效筛选。",
+    eyebrow: "Products",
+    headline: "四类护肤产品，满足日常护理。",
+    intro: "从清洁开始，到补水、防晒与夜间抗衰修护，buweihao 以清晰的产品结构帮助用户建立稳定的护肤流程。",
+    filterLabel: "产品筛选",
+    countLabel: "件产品",
+    allCategories: "全部分类",
+    allMaterials: "全部功效",
+    sort: "排序",
+    featured: "默认",
+    priceAsc: "价格从低到高",
+    priceDesc: "价格从高到低",
+    empty: "没有匹配的产品。",
+  },
+};
+
+const t = copy[lang];
+---
+
+<BaseLayout title={t.title} description={t.description} lang={lang}>
+  <main id="main-content">
+    <section class="mx-auto max-w-screen-xl px-6 pb-12 pt-20 md:pb-16 md:pt-28">
+      <p class="mb-6 flex items-center gap-3 text-[11px] uppercase tracking-[0.3em] text-faded">
+        <span class="inline-block h-px w-8 bg-ink/40"></span>
+        {t.eyebrow}
+      </p>
+      <h1 class="max-w-[18ch] text-balance font-serif text-5xl leading-[0.95] md:text-6xl">
+        {t.headline}
+      </h1>
+      <p class="mt-6 max-w-[52ch] leading-relaxed text-faded">{t.intro}</p>
+    </section>
+
+    <div class="mx-auto max-w-screen-xl px-6 pb-32">
+      <section class="border-t border-line pb-12 pt-8" aria-label={t.filterLabel}>
+        <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <div class="space-y-4">
+            <h2 class="text-xs uppercase tracking-[0.25em] text-faded">
+              <span data-catalog-count>{products.length}</span> <span data-catalog-count-label>{t.countLabel}</span>
+            </h2>
+            <div class="flex flex-wrap items-center gap-2" data-filter-group="category">
+              <button class="catalog-chip is-active" type="button" data-filter-value="all" aria-pressed="true">{t.allCategories}</button>
+              {allCategories.map((category) => <button class="catalog-chip" type="button" data-filter-value={category} aria-pressed="false">{category}</button>)}
+            </div>
+            <div class="flex flex-wrap items-center gap-2" data-filter-group="material">
+              <button class="catalog-chip is-active" type="button" data-filter-value="all" aria-pressed="true">{t.allMaterials}</button>
+              {allMaterials.map((material) => <button class="catalog-chip" type="button" data-filter-value={material} aria-pressed="false">{material}</button>)}
+            </div>
+          </div>
+          <label class="flex items-center gap-3 text-xs uppercase tracking-widest text-faded">
+            {t.sort}
+            <select class="border-b border-line bg-transparent py-1 pr-6 text-ink focus:border-ink focus:outline-none" data-catalog-sort>
+              <option value="featured">{t.featured}</option>
+              <option value="price-asc">{t.priceAsc}</option>
+              <option value="price-desc">{t.priceDesc}</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <p class="hidden py-32 text-center font-serif text-2xl text-faded" data-catalog-empty>
+        {t.empty}
+      </p>
+      <div class="grid grid-cols-1 gap-x-8 gap-y-16 md:grid-cols-2 lg:grid-cols-4" data-catalog-grid>
+        {
+          products.map((product, index) => (
+            <article data-catalog-item data-category={product.category} data-material={product.material} data-price={product.price} data-index={index}>
+              <ProductCard product={product} eager={index < 4} lang={lang} />
+            </article>
+          ))
+        }
+      </div>
+    </div>
+
+    <style>
+      .catalog-chip {
+        border-radius: 9999px;
+        padding: 0.375rem 1rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        line-height: 1rem;
+        color: var(--color-ink);
+        box-shadow: inset 0 0 0 1px var(--color-line);
+        transition:
+          background-color 180ms ease,
+          color 180ms ease,
+          box-shadow 180ms ease;
+      }
+
+      .catalog-chip:hover {
+        background-color: var(--color-paper);
+      }
+
+      .catalog-chip.is-active {
+        background-color: var(--color-ink);
+        color: var(--color-base);
+        box-shadow: inset 0 0 0 1px var(--color-ink);
+      }
+    </style>
+
+    <script is:inline define:vars={{ countLabel: t.countLabel }}>
+      const grid = document.querySelector("[data-catalog-grid]");
+      const items = Array.from(document.querySelectorAll("[data-catalog-item]"));
+      const countNode = document.querySelector("[data-catalog-count]");
+      const countLabelNode = document.querySelector("[data-catalog-count-label]");
+      const empty = document.querySelector("[data-catalog-empty]");
+      const sort = document.querySelector("[data-catalog-sort]");
+      const filters = { category: "all", material: "all" };
+
+      function selectInitialCategory() {
+        const category = new URLSearchParams(window.location.search).get("category");
+        if (!category) return;
+        const button = document.querySelector(`[data-filter-group="category"] button[data-filter-value="${CSS.escape(category)}"]`);
+        if (!button) return;
+        filters.category = category;
+        button.parentElement.querySelectorAll("button").forEach((chip) => {
+          chip.classList.remove("is-active");
+          chip.setAttribute("aria-pressed", "false");
+        });
+        button.classList.add("is-active");
+        button.setAttribute("aria-pressed", "true");
+      }
+
+      function applyFilters() {
+        const visible = items.filter((item) => {
+          return (
+            (filters.category === "all" || item.dataset.category === filters.category) &&
+            (filters.material === "all" || item.dataset.material === filters.material)
+          );
+        });
+
+        visible.sort((a, b) => {
+          if (sort.value === "price-asc") return Number(a.dataset.price) - Number(b.dataset.price);
+          if (sort.value === "price-desc") return Number(b.dataset.price) - Number(a.dataset.price);
+          return Number(a.dataset.index) - Number(b.dataset.index);
+        });
+
+        items.forEach((item) => (item.hidden = true));
+        visible.forEach((item) => {
+          item.hidden = false;
+          grid.appendChild(item);
+        });
+
+        countNode.textContent = String(visible.length);
+        countLabelNode.textContent = countLabel;
+        empty.classList.toggle("hidden", visible.length > 0);
+        grid.classList.toggle("hidden", visible.length === 0);
+      }
+
+      document.querySelectorAll("[data-filter-group]").forEach((group) => {
+        group.addEventListener("click", (event) => {
+          const button = event.target.closest("button[data-filter-value]");
+          if (!button) return;
+          const key = group.dataset.filterGroup;
+          filters[key] = button.dataset.filterValue;
+          group.querySelectorAll("button").forEach((chip) => {
+            chip.classList.remove("is-active");
+            chip.setAttribute("aria-pressed", "false");
+          });
+          button.classList.add("is-active");
+          button.setAttribute("aria-pressed", "true");
+          applyFilters();
+        });
+      });
+
+      sort.addEventListener("change", applyFilters);
+      selectInitialCategory();
+      applyFilters();
+    </script>
+  </main>
+</BaseLayout>

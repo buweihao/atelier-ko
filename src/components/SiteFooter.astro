@@ -1,5 +1,9 @@
 ---
+import { defaultLocale, localePath, ui } from "@/lib/i18n";
+
 const year = new Date().getFullYear();
+const { lang = defaultLocale } = Astro.props;
+const copy = ui[lang];
 ---
 
 <footer id="studio" class="mt-32 border-t border-line py-24">
@@ -7,19 +11,25 @@ const year = new Date().getFullYear();
     <div class="space-y-4">
       <div class="font-serif text-lg italic tracking-tight">buweihao</div>
       <p class="max-w-[30ch] text-sm leading-relaxed text-faded">
-        专注清洁、补水、防晒与抗衰的个人护肤品牌，给日常护理留下更清晰的选择。
+        {copy.footerCopy}
       </p>
     </div>
     <div class="space-y-4">
-      <h2 class="text-xs font-medium uppercase tracking-widest">导航</h2>
+      <h2 class="text-xs font-medium uppercase tracking-widest">{copy.footerNav}</h2>
       <ul class="space-y-2 text-sm">
-        <li><a href="/products" class="text-faded transition-colors hover:text-ink">产品</a></li>
-        <li><a href="/about" class="text-faded transition-colors hover:text-ink">关于</a></li>
-        <li><a href="/contact" class="text-faded transition-colors hover:text-ink">联系</a></li>
+        {
+          copy.nav.slice(1).map((item) => (
+            <li>
+              <a href={localePath(lang, item.href)} class="text-faded transition-colors hover:text-ink">
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
       </ul>
     </div>
     <div class="space-y-4">
-      <h2 class="text-xs font-medium uppercase tracking-widest">联系</h2>
+      <h2 class="text-xs font-medium uppercase tracking-widest">{copy.footerContact}</h2>
       <ul class="space-y-2 text-sm">
         <li><a href="mailto:buweihao@qq.com" class="text-faded transition-colors hover:text-ink">buweihao@qq.com</a></li>
         <li><a href="https://baidu.com" class="text-faded transition-colors hover:text-ink">baidu.com</a></li>

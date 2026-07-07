@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>页面未找到 — buweihao</title><meta name="description" content="你访问的页面不存在或已移动。"><meta name="author" content="buweihao"><meta name="theme-color" content="#f8f7f4"><link rel="canonical" href="https://atelier-ko.weihaobu.cn/404/"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="robots" content="noindex,nofollow"><meta property="og:title" content="页面未找到 — buweihao"><meta property="og:description" content="你访问的页面不存在或已移动。"><meta property="og:site_name" content="buweihao"><meta property="og:type" content="website"><meta property="og:url" content="https://atelier-ko.weihaobu.cn/404/"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="页面未找到 — buweihao"><meta name="twitter:description" content="你访问的页面不存在或已移动。"><script>
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>页面未找到 — buweihao</title><meta name="description" content="你访问的页面不存在或已移动。"><meta name="author" content="buweihao"><meta name="theme-color" content="#f8f7f4"><link rel="canonical" href="https://atelier-ko.weihaobu.cn/404/"><link rel="alternate" hreflang="en" href="https://atelier-ko.weihaobu.cn/en/404"><link rel="alternate" hreflang="zh-CN" href="https://atelier-ko.weihaobu.cn/zh/404"><link rel="alternate" hreflang="x-default" href="https://atelier-ko.weihaobu.cn/en/404"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="robots" content="noindex,nofollow"><meta property="og:title" content="页面未找到 — buweihao"><meta property="og:description" content="你访问的页面不存在或已移动。"><meta property="og:site_name" content="buweihao"><meta property="og:type" content="website"><meta property="og:url" content="https://atelier-ko.weihaobu.cn/404/"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="页面未找到 — buweihao"><meta name="twitter:description" content="你访问的页面不存在或已移动。"><script>
       (() => {
         const storageKey = "atelier-ko-cart";
 
@@ -24,8 +24,9 @@
           document.querySelectorAll("[data-cart-count]").forEach((node) => {
             node.textContent = `(${total})`;
           });
+          const labelTemplate = document.body.dataset.cartLabel || "Cart, {count} items";
           document.querySelectorAll("[data-cart-label]").forEach((node) => {
-            node.setAttribute("aria-label", `购物车，${total} 件商品`);
+            node.setAttribute("aria-label", labelTemplate.replace("{count}", String(total)));
           });
         }
 
@@ -64,8 +65,6 @@
         window.addEventListener("storage", updateBadges);
         document.addEventListener("atelier-cart-change", updateBadges);
       })();
-    </script><link rel="stylesheet" href="/_astro/BaseLayout.cK8rY8VI.css"></head> <body class="bg-base text-ink"> <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:text-[var(--color-base)]">
-跳到主要内容
-</a>  <div>  <main id="main-content" class="flex min-h-screen items-center justify-center bg-base px-4"> <div class="max-w-md text-center"> <h1 class="font-serif text-7xl">404</h1> <h2 class="mt-4 font-serif text-2xl">页面未找到</h2> <p class="mt-2 text-sm text-faded">你访问的页面不存在或已移动。</p> <div class="mt-6"> <a href="/products" class="inline-flex items-center justify-center rounded-full bg-ink px-5 py-3 text-xs uppercase tracking-widest text-[var(--color-base)] transition-colors hover:bg-accent">
+    </script><link rel="stylesheet" href="/_astro/BaseLayout.CQKeTt2e.css"></head> <body class="bg-base text-ink" data-cart-label="Cart, {count} items"> <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:text-[var(--color-base)]"> Skip to main content </a>  <div>  <main id="main-content" class="flex min-h-screen items-center justify-center bg-base px-4"> <div class="max-w-md text-center"> <h1 class="font-serif text-7xl">404</h1> <h2 class="mt-4 font-serif text-2xl">页面未找到</h2> <p class="mt-2 text-sm text-faded">你访问的页面不存在或已移动。</p> <div class="mt-6"> <a href="/products" class="inline-flex items-center justify-center rounded-full bg-ink px-5 py-3 text-xs uppercase tracking-widest text-[var(--color-base)] transition-colors hover:bg-accent">
 返回产品页
 </a> </div> </div> </main>  </div>  </body></html>
