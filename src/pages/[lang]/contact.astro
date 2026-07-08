@@ -18,8 +18,14 @@ const copy: Record<Locale, any> = {
     social: "Social",
     domain: "Production domain",
     name: "Name",
+    company: "Company",
+    phone: "Phone",
+    productInterest: "Product interest",
     message: "Message",
     submit: "Send email",
+    sending: "Sending...",
+    success: "Thanks. Your message has been sent.",
+    error: "The message could not be sent. Please email us directly.",
   },
   zh: {
     title: "联系 — buweihao",
@@ -31,8 +37,14 @@ const copy: Record<Locale, any> = {
     social: "社交链接",
     domain: "生产域名",
     name: "姓名",
+    company: "公司",
+    phone: "电话",
+    productInterest: "感兴趣的产品",
     message: "留言",
     submit: "发送邮件",
+    sending: "发送中...",
+    success: "已发送，我们会尽快回复。",
+    error: "暂时发送失败，请直接通过邮箱联系我们。",
   },
 };
 const t = copy[lang];
@@ -65,7 +77,13 @@ const t = copy[lang];
         </div>
       </div>
 
-      <form class="mt-16 grid gap-5 md:grid-cols-2" method="post" action="mailto:buweihao@qq.com">
+      <form class="mt-16 grid gap-5 md:grid-cols-2" method="post" action="mailto:buweihao@qq.com" data-contact-form>
+        <input type="hidden" name="locale" value={lang} />
+        <input type="hidden" name="sourceUrl" value={Astro.url.href} />
+        <label class="hidden" aria-hidden="true">
+          Website
+          <input name="website" tabindex="-1" autocomplete="off" />
+        </label>
         <label class="block">
           <span class="text-[11px] uppercase tracking-widest text-faded">{t.name}</span>
           <input name="name" required class="mt-2 w-full border-b border-line bg-transparent py-3 text-sm transition-colors focus:border-ink focus:outline-none" />
@@ -74,16 +92,71 @@ const t = copy[lang];
           <span class="text-[11px] uppercase tracking-widest text-faded">{t.email}</span>
           <input name="email" type="email" required class="mt-2 w-full border-b border-line bg-transparent py-3 text-sm transition-colors focus:border-ink focus:outline-none" />
         </label>
+        <label class="block">
+          <span class="text-[11px] uppercase tracking-widest text-faded">{t.company}</span>
+          <input name="company" class="mt-2 w-full border-b border-line bg-transparent py-3 text-sm transition-colors focus:border-ink focus:outline-none" />
+        </label>
+        <label class="block">
+          <span class="text-[11px] uppercase tracking-widest text-faded">{t.phone}</span>
+          <input name="phone" class="mt-2 w-full border-b border-line bg-transparent py-3 text-sm transition-colors focus:border-ink focus:outline-none" />
+        </label>
+        <label class="block md:col-span-2">
+          <span class="text-[11px] uppercase tracking-widest text-faded">{t.productInterest}</span>
+          <input name="productInterest" class="mt-2 w-full border-b border-line bg-transparent py-3 text-sm transition-colors focus:border-ink focus:outline-none" />
+        </label>
         <label class="block md:col-span-2">
           <span class="text-[11px] uppercase tracking-widest text-faded">{t.message}</span>
           <textarea name="message" required rows="5" class="mt-2 w-full resize-y border-b border-line bg-transparent py-3 text-sm transition-colors focus:border-ink focus:outline-none"></textarea>
         </label>
-        <div class="md:col-span-2">
-          <button type="submit" class="inline-flex items-center justify-center gap-3 rounded-full bg-ink px-7 py-4 text-[11px] font-medium uppercase tracking-[0.2em] text-[var(--color-base)] transition-colors hover:bg-accent">
+        <div class="space-y-4 md:col-span-2">
+          <button type="submit" class="inline-flex items-center justify-center gap-3 rounded-full bg-ink px-7 py-4 text-[11px] font-medium uppercase tracking-[0.2em] text-[var(--color-base)] transition-colors hover:bg-accent disabled:cursor-wait disabled:opacity-60" data-contact-submit>
             {t.submit}
           </button>
+          <p class="hidden max-w-[58ch] text-sm leading-relaxed" data-contact-status aria-live="polite"></p>
         </div>
       </form>
     </section>
+
+    <script is:inline define:vars={{ labels: { submit: t.submit, sending: t.sending, success: t.success, error: t.error } }}>
+      const form = document.querySelector("[data-contact-form]");
+      const button = document.querySelector("[data-contact-submit]");
+      const status = document.querySelector("[data-contact-status]");
+
+      if (form && button && status) {
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          const formData = new FormData(form);
+          const payload = Object.fromEntries(formData.entries());
+
+          button.disabled = true;
+          button.textContent = labels.sending;
+          status.className = "max-w-[58ch] text-sm leading-relaxed text-faded";
+          status.textContent = labels.sending;
+
+          try {
+            const response = await fetch("/api/contact", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+            const result = await response.json().catch(() => ({}));
+
+            if (!response.ok || !result.ok) {
+              throw new Error(result.error || "Unable to send");
+            }
+
+            form.reset();
+            status.className = "max-w-[58ch] text-sm leading-relaxed text-ink";
+            status.textContent = labels.success;
+          } catch {
+            status.className = "max-w-[58ch] text-sm leading-relaxed text-accent";
+            status.textContent = labels.error;
+          } finally {
+            button.disabled = false;
+            button.textContent = labels.submit;
+          }
+        });
+      }
+    </script>
   </main>
 </BaseLayout>
